@@ -1,4 +1,4 @@
-sum_acs  <- function(formula, varname, method= "proportion", state="WI", level = "county",
+sumacs  <- function(formula, varname, method= "proportion", state="WI", level = "county",
                      conf.level=.90, endyear = "2013", one.zero = TRUE, data = NULL, file = NULL,
                      county = "*",
                      county_subdivision ="*",
