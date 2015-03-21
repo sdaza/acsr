@@ -8,6 +8,5 @@ Maintainer: Sebastian Daza <sdaza@ssc.wisc.edu>
 Description: Provides a general toolkit for downloading, managing, analyzing, and presenting data from the U.S. Census American Community Survey (ACS).  Confidence intervals provided with the data are converted to standard errors to be bundled with estimates in complex acs objects.  Package provides new methods to conduct standard operations and tests of significance on acs objects in statistically appropriate ways. Current version is 1.2 +/- .05.
 License: What license is it under?
 LazyData: TRUE
-Imports: acs (>= 1.2),
-    data.table (>= 1.9.5)
+Depends: acs (>= 1.2), data.table (>= 1.9.5)
 Suggests:
