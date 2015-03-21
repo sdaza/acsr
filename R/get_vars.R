@@ -1,15 +1,11 @@
-#' Add together two numbers.
-#'
-#' @param x A number.
-#' @param y A number.
-#' @return The sum of \code{x} and \code{y}.
+#' @title Get ACS variable names from text.
+#' @description The \code{getvars} function gets ACS variable names from text containing formulas with addition, substraction, and/or division operators.
+#' @param formula Character or vector of characters with formulas using ACS variable names.
+#' @return Returns a vector with uppercase ACS variables names.
+#' @details Text can be upper or lower case, include parentheses or "* 100".
 #' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' getvars("b16004_004 + b16004_026 + b16004_048 / b16004_001")
 getvars <- function(formula) {
-
-# formula : text, + - are needed, / define a numerator and denominator
-# example: b16004_004 + b16004_026 + b16004_048 / b16004_001
 constr <- gsub("\\(|\\)", "", formula) #
 constr <- gsub("\\* 100", "", constr)
 vars  <- unlist(strsplit(constr, "[\\+]|[\\-]|[\\/]|[\\*]"))

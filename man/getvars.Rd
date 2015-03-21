@@ -2,23 +2,23 @@
 % Please edit documentation in R/get_vars.R
 \name{getvars}
 \alias{getvars}
-\title{Add together two numbers.}
+\title{Get ACS variable names from text.}
 \usage{
 getvars(formula)
 }
 \arguments{
-\item{x}{A number.}
-
-\item{y}{A number.}
+\item{formula}{Character or vector of characters with formulas using ACS variable names.}
 }
 \value{
-The sum of \code{x} and \code{y}.
+Returns a vector with uppercase ACS variables names.
 }
 \description{
-Add together two numbers.
+The \code{getvars} function gets ACS variable names from text containing formulas with addition, substraction, and/or division operators.
+}
+\details{
+Text can be upper or lower case, include parentheses or "* 100".
 }
 \examples{
-add(1, 1)
-add(10, 1)
+getvars("b16004_004 + b16004_026 + b16004_048 / b16004_001")
 }
 
