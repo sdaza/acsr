@@ -7,7 +7,6 @@
 #' @examples
 #' add(1, 1)
 #' add(10, 1)
-
 acsdata <- function(formula, state = "WI", level = "county", endyear = 2013,
                          county = "*",
                          county_subdivision ="*",

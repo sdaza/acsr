@@ -6,7 +6,6 @@
 #' @examples
 #' add(1, 1)
 #' add(10, 1)
-
 getvars <- function(formula) {
 
 # formula : text, + - are needed, / define a numerator and denominator
