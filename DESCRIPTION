@@ -1,10 +1,14 @@
 Package: acsr
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Wrapped functions to manage data from the US Census American Community Survey (ACS) ACS files
 Version: 0.1
 Date: 2015-03-21
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
+Author: Sebastian Daza <sdaza@ssc.wisc.edu>
+Maintainer: Sebastian Daza <sdaza@ssc.wisc.edu>
+Description: Provides a general toolkit for downloading, managing, analyzing, and presenting data from the U.S. Census American Community Survey (ACS).  Confidence intervals provided with the data are converted to standard errors to be bundled with estimates in complex acs objects.  Package provides new methods to conduct standard operations and tests of significance on acs objects in statistically appropriate ways. Current version is 1.2 +/- .05.
 License: What license is it under?
 LazyData: TRUE
+Imports:  acs (>= 1.2),
+    data.table (>= 1.9.5)
+Suggests:
+NeedsCompilation: no
