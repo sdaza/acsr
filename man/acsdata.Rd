@@ -38,7 +38,7 @@ acsdata(formula, level = "county", endyear = 2013, span = 5,
 Returns a list of ACS objects for different levels to be used with the \code{\link{sumacs}} function.
 }
 \description{
-Because downloading the data to compute a proportion, ratio or aggregation can be very slow, the \code{acsdata} function allow to save an object that can be used with the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+Because downloading the data to compute a proportion, ratio or aggregation can be slow, the \code{acsdata} function creates an object that can be used with the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \note{
 Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract".

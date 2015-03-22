@@ -1,5 +1,5 @@
 #' @title Create a list containing ACS data files.
-#' @description Because downloading the data to compute a proportion, ratio or aggregation can be very slow, the \code{acsdata} function allow to save an object that can be used with the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+#' @description Because downloading the data to compute a proportion, ratio or aggregation can be slow, the \code{acsdata} function creates an object that can be used with the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 #' @param formula A character object or vector of characters containing formulas using ACS variables following the format.
 #' @param level A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county". 
 #' @param endyear An integer (defaults to 2013) indicating the latest year of the data in the survey.

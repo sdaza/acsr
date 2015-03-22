@@ -56,9 +56,9 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
   nlevels <- length(level)
   newvars <- length(varname)
 
-  print (paste0(". . . . . .  ACS variables : ", nvars, "  . . . . . "))
-  print (paste0(". . . . . .  Levels : ", nlevels, "  . . . . . "))
-  print (paste0(". . . . . .  New variables : ", newvars, "  . . . . . "))
+  print (paste0(". . . . . .  ACS variables : ", nvars))
+  print (paste0(". . . . . .  Levels : ", nlevels))
+  print (paste0(". . . . . .  New variables : ", newvars))
 
   #########################################
   # GET DATA FOR ALL THE VARIABLES FIRST
@@ -66,7 +66,6 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
 
   if (is.null(data)) {
 
-    print (". . . . . .  Getting the data  . . . . . ")
     ldata <- list()
 
     for (tlev in 1:length(level) ) {
@@ -702,7 +701,7 @@ else if (format.out == "wide") {
 # WRITE CSV
 
   if (is.null(file)) {
-    print(". . . . . .  Done!  . . . . . ")
+    print(". . . . . .  Done!")
     return(fdata)
   }
 
