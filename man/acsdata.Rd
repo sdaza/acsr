@@ -4,8 +4,8 @@
 \alias{acsdata}
 \title{Create a list containing ACS data files.}
 \usage{
-acsdata(formula, level = "county", endyear = 2013, state = "WI",
-  county = "*", county_subdivision = "*", tract = "*",
+acsdata(formula, level = "county", endyear = 2013, span = 5,
+  state = "WI", county = "*", county_subdivision = "*", tract = "*",
   block_group = "*", congressional_district = "*",
   school_district_secondary = "*", school_district_elementary = "*")
 }
@@ -15,6 +15,8 @@ acsdata(formula, level = "county", endyear = 2013, state = "WI",
 \item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
 
 \item{endyear}{An integer (defaults to 2013) indicating the latest year of the data in the survey.}
+
+\item{span}{An integer indicating the span (in years) of the desired ACS data (should be 1, 3,or 5), defaults to 5.}
 
 \item{state}{Either the two-digit numeric FIPS code for the state, the two-letter postal abbreviation, or a character string to match in the state name (or wildcard "*" for all); setting state without other options corresponds to using census summary level 040, but it may be used in conjunction with other summary levels below. The default value is "WI".}
 

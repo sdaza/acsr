@@ -5,10 +5,11 @@
 \title{Estimate proportions, ratios, and aggregations with their respective MOEs.}
 \usage{
 sumacs(formula, varname, method, level = "county", endyear = "2013",
-  conf.level = 0.9, one.zero = TRUE, data = NULL, format.out = "wide",
-  file = NULL, state = "WI", county = "*", county_subdivision = "*",
-  tract = "*", block_group = "*", congressional_district = "*",
-  school_district_secondary = "*", school_district_elementary = "*")
+  span = 5, conf.level = 0.9, one.zero = TRUE, data = NULL,
+  format.out = "wide", file = NULL, state = "WI", county = "*",
+  county_subdivision = "*", tract = "*", block_group = "*",
+  congressional_district = "*", school_district_secondary = "*",
+  school_district_elementary = "*")
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division.}
@@ -20,6 +21,8 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 \item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
 
 \item{endyear}{An integer (defaults to 2013) indicating the latest year of the data in the survey.}
+
+\item{span}{An integer indicating the span (in years) of the desired ACS data (should be 1, 3,or 5), defaults to 5.}
 
 \item{conf.level}{Confidence level to estimate MOEs. The default value is 0.90.}
 
