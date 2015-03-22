@@ -12,7 +12,7 @@ acsdata(formula, level = "county", endyear = 2013, state = "WI",
 \arguments{
 \item{formula}{A character object or vector of characters containing formulas using ACS variables following the format.}
 
-\item{level}{A character or vector of character specifying the geographic level of the data. The levels included in this functions are: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
+\item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
 
 \item{endyear}{An integer (defaults to 2013) indicating the latest year of the data in the survey.}
 
@@ -36,7 +36,7 @@ acsdata(formula, level = "county", endyear = 2013, state = "WI",
 Returns a list of ACS objects for different levels to be used with the \code{\link{sumacs}} function.
 }
 \description{
-Because downloading the data each time one wants to compute a proportion, ratio or aggregation can be time consuming, the \code{acsdata} function allow to save an object that can be used as input in the \code{\link{sumacs}} function. Before using this function remember to define the key to download the data using the \code{\link{acs}} command: \code{api.key.install(key="*")}.
+Because downloading the data each time one wants to compute a proportion, ratio or aggregation can be time consuming, the \code{acsdata} function allow to save an object that can be used as input in the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \note{
 Depending on the quality of the internet connection, number of variables and level, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract".

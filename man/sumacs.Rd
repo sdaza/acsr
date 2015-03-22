@@ -13,11 +13,11 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division.}
 
-\item{varname}{A character or vector of characters containing the new variables to be created. This vector must have same length as formula and method.}
+\item{varname}{A character or vector of characters containing the new variables to be created. This vector must have same length as \code{formula} and \code{method}.}
 
-\item{method}{A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as formula and varname. and method.}
+\item{method}{A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as \code{formula} and \code{varname}.}
 
-\item{level}{A character or vector of character specifying the geographic level of the data. The levels included in this functions are: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
+\item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
 
 \item{endyear}{An integer (defaults to 2013) indicating the latest year of the data in the survey.}
 
@@ -49,7 +49,7 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 Returns a \code{data.table/data.frame} object with the estimates and MOEs.
 }
 \description{
-If using function without specifying data, remember to define the key to download the data using the \code{\link{acs}} command: \code{api.key.install(key="*")}.
+The \code{sumacs} function uses outputs from the \code{\link{acs}} to compute proportions, ratios and aggregations from different formulas and levels. If this functions is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \note{
 Depending on the quality of the internet connection, number of variables and level, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract". It is recommended to get the data using the function \code{\link{acsdata}} first, and then to use \code{sumacs}.

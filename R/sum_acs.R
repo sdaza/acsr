@@ -1,9 +1,9 @@
 #' @title Estimate proportions, ratios, and aggregations with their respective MOEs.
-#' @description If using function without specifying data, remember to define the key to download the data using the \code{\link{acs}} command: \code{api.key.install(key="*")}.
+#' @description The \code{sumacs} function uses outputs from the \code{\link{acs}} to compute proportions, ratios and aggregations from different formulas and levels. If this functions is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division. 
-#' @param varname A character or vector of characters containing the new variables to be created. This vector must have same length as formula and method.
-#' @param method A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as formula and varname. and method.
-#' @param level A character or vector of character specifying the geographic level of the data. The levels included in this functions are: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".
+#' @param varname A character or vector of characters containing the new variables to be created. This vector must have same length as \code{formula} and \code{method}.
+#' @param method A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as \code{formula} and \code{varname}.
+#' @param level A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".
 #' @param endyear An integer (defaults to 2013) indicating the latest year of the data in the survey.
 #' @param conf.level Confidence level to estimate MOEs. The default value is 0.90. 
 #' @param one.zero Whether to include standard errors for only one zero-value (max value) of columns or all. The default is TRUE.
@@ -32,29 +32,17 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
                      school_district_secondary = "*",
                      school_district_elementary = "*")  {
 
-  # formula : character, + - are needed, / define numerator and denominator
-  # varname : name of new variables created, this vector must have same length as formula and method
-  # method  : by default "proportion
-  # example : b16004_004 + b16004_026 + b16004_048 / b16004_001
-  # state   : by default "WI"
-  # level   : "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary"
-  # endyear : by default "2013"
-  # to extract especific units using API, define specific level variables (e.g., block_group). this does not work when using previous data.
-
-  # CHECKS
-
-  if (length(method) != length(varname)) {
-    stop("Methods must have the same length as new variables")
-  }
+  ##################
+  # INITIAL CHECK
+  ###################
 
   if (identical(length(formula), length(varname), length(method)) == 0) {
     stop("Vector of formulas, variable names and methods must to have the same length!")
   }
 
-  # LIBRARIES
-
-  library(acs)
-  library(data.table)
+  ###############################
+  # DEFINITION OF SOME VARIABLES
+  ###############################
 
   conf.level <- round(qnorm( (1 + conf.level) / 2), digits =3)
   variables <- getvars(formula)
@@ -178,7 +166,7 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
     }
     else if ( is.list(data) & !(all(sapply(data, class) ==  "acs")) )
     {
-      stop("The list must cointain ACS objecs!")
+      stop("The list must cointain ACS objects!")
     }
     else if ( !(all(level %in% names(data)))) {
       stop("The data must cointain all the expected levels!")
