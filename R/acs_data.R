@@ -1,5 +1,5 @@
 #' @title Create a list containing ACS data files.
-#' @description Because downloading the data each time one wants to compute a proportion, ratio or aggregation can be time consuming, the \code{acsdata} function allow to save an object that can be used as input in the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+#' @description Because downloading the data to compute a proportion, ratio or aggregation can be very slow, the \code{acsdata} function allow to save an object that can be used with the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 #' @param formula A character object or vector of characters containing formulas using ACS variables following the format.
 #' @param level A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county". 
 #' @param endyear An integer (defaults to 2013) indicating the latest year of the data in the survey.
@@ -13,7 +13,7 @@
 #' @param school_district_elementary A numeric code (or wildcard "*" for all) corresponding to the desired FIPS state school district (elementary), or a character string to search for in the names of these districts; setting state and school.district.elementary without other options corresponds to using census summary level 950. The default value is "*".
 #' @param school_district_secondary A numeric code (or wildcard "*" for all) corresponding to the desired FIPS state school district (secondary), or a character string to search for in the names of these districts; setting state and school.district.secondary without other options corresponds to using census summary level 960. The default value is "*".
 #' @return Returns a list of ACS objects for different levels to be used with the \code{\link{sumacs}} function.
-#' @note Depending on the quality of the internet connection, number of variables and level, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract".
+#' @note Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract".
 #' @examples
 #' api.key.install(key="*")
 #' acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)", level = "county")
@@ -33,8 +33,8 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
   nvars <- length(variables)
   nlevels <- length(level)
 
-  print (paste0(". . . . . .  ACS variables : ", nvars, "  . . . . . "))
-  print (paste0(". . . . . .  Levels : ", nlevels, "  . . . . . "))
+  print (paste0(". . . . . .  ACS variables : ", nvars))
+  print (paste0(". . . . . .  Levels : ", nlevels))
 
   ldata <- list()
 
@@ -43,7 +43,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
     # FIRST GET THE DATA, THIS COULD BE SLOW, SPECIALLY FOR COUNTY SUBDIVISION AND BLOCK GROUP
 
     if (level[tlev] == "state") {
-      print (". . . . . .  Getting state data . . . . . ")
+      print (". . . . . .  Getting state data")
       ldata[["state"]] <- suppressWarnings(acs.fetch( geo.make(state = state), variable = variables, endyear = endyear, span = span))
 
       if (length(ldata[["state"]]@acs.colnames) != length(variables)) {
@@ -53,7 +53,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
     }
 
     else if (level[tlev] == "county") {
-      print (". . . . . .  Getting county data  . . . . . ")
+      print (". . . . . .  Getting county data")
       ldata[["county"]] <- suppressWarnings(acs.fetch( geo.make(state = state, county = county), variable = variables, endyear = endyear, span = span))
 
       if (length(ldata[["county"]]@acs.colnames) != length(variables)) {
@@ -64,7 +64,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
     else if (level[tlev] == "county.subdivision") {
 
-      print (". . . . . .  Getting county subdivision data  . . . . . ")
+      print (". . . . . .  Getting county subdivision data")
       county.data <-  suppressWarnings( acs.fetch( geo.make(state= state, county = "*"), variable = variables1, endyear = endyear, span = span) )
       county <- as.numeric(geography(county.data)$county)
       ldata[["county.subdivision"]] <- suppressWarnings( acs.fetch( geo.make(state = state, county = county, county.subdivision = county_subdivision), variable = variables, endyear = endyear, span = span) )
@@ -77,7 +77,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
     else if (level[tlev] == "tract") {
 
-      print (". . . . . .  Getting tract data  . . . . . ")
+      print (". . . . . .  Getting tract data")
       ldata[["tract"]] <- suppressWarnings( acs.fetch( geo.make(state = state, county = county, tract = tract), variable = variables, endyear = endyear, span = span) )
 
       if (length(ldata[["tract"]]@acs.colnames) != length(variables)) {
@@ -89,7 +89,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
     else if (level[tlev] == "block.group") {
 
-      print (". . . . . .  Getting block group data  . . . . . ")
+      print (". . . . . .  Getting block group data")
       county.data <-  suppressWarnings( acs.fetch( geo.make(state= state, county = "*"), variable = variables1, endyear = endyear, span = span))
       county <- as.numeric(geography(county.data)$county)
 
@@ -101,7 +101,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
     }
     else if (level[tlev] == "congressional.district") {
-      print (". . . . . .  Getting congressional district data  . . . . . ")
+      print (". . . . . .  Getting congressional district data")
       ldata[["congressional.district"]] <- suppressWarnings( acs.fetch( geo.make(state= state, congressional.district = congressional_district), variable = variables, endyear = endyear, span = span) )
 
       if (length(ldata[["congressional.district"]]@acs.colnames) != length(variables)) {
@@ -110,7 +110,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
     }
     else if (level[tlev] == "school.district.secondary") {
-      print (". . . . . .  Getting school district secondary data  . . . . . ")
+      print (". . . . . .  Getting school district secondary data")
       ldata[["school.district.secondary"]] <- suppressWarnings( acs.fetch( geo.make(state= state, school.district.secondary = school_district_secondary), variable = variables, endyear = endyear, span = span) )
 
       if (length(ldata[["school.district.secondary"]]@acs.colnames) != length(variables)) {
@@ -119,7 +119,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
     }
     else if (level[tlev] == "school.district.elementary") {
-      print (". . . . . .  Getting school district elementary data  . . . . . ")
+      print (". . . . . .  Getting school district elementary data")
       ldata[["school.district.elementary"]] <- suppressWarnings ( acs.fetch( geo.make(state= state, school.district.elementary = school_district_elementary), variable = variables, endyear = endyear, span = span) )
 
       if (length(ldata[["school.district.elementary"]]@acs.colnames) != length(variables)) {
@@ -130,7 +130,7 @@ acsdata <- function(formula, level = "county", endyear = 2013, span = 5,
 
   } # END LEVEL LOOP
 
-  print(". . . . . .  Done!  . . . . . ")
+  print(". . . . . .  Done!")
   return(ldata)
 
 }

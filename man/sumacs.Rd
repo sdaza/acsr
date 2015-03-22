@@ -57,7 +57,7 @@ Returns a \code{data.table/data.frame} object with the estimates and MOEs.
 The \code{sumacs} function uses outputs from the \code{\link{acs}} to compute proportions, ratios and aggregations from different formulas and levels. If this functions is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \note{
-Depending on the quality of the internet connection, number of variables and level, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract". It is recommended to get the data using the function \code{\link{acsdata}} first, and then to use \code{sumacs}.
+Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract". It is recommended to get the data using the function \code{\link{acsdata}} first, and then to use \code{sumacs}.
 }
 \examples{
 api.key.install(key="*")
