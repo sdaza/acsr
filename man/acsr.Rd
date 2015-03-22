@@ -10,8 +10,6 @@ Wrapped functions to download, manage, and presenting data from the U.S. Census 
 }
 \details{
 \itemize{
-  \item Package: acsr
-  \item Type: Package
   \item Version: 0.1
   \item Date: 2015-03-21
   \item Depends: acs (>= 1.2), data.table (>= 1.9.5)

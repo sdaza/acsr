@@ -2,18 +2,6 @@
 #'
 #' @description Wrapped functions to download, manage, and presenting data from the U.S. Census American Community Survey (ACS).
 #'
-#'
-#' @details
-#'
-#' \itemize{
-#'   \item Package: acsr
-#'   \item Type: Package
-#'   \item Version: 0.1
-#'   \item Date: 2015-03-21
-#'   \item Depends: acs (>= 1.2), data.table (>= 1.9.5)
-#'   \item URL: \url{http://github.com/sdaza/acsr}
-#' }
-#'
 #' @author Sebastian Daza \email{sdaza@@ssc.wisc.edu}
 #'
 #' @section Functions:
@@ -24,7 +12,14 @@
 #'   \item \code{\link{getvars}}: Get ACS variable names from text.
 #' }
 #'
+#' @details
 #'
+#' \itemize{
+#'   \item Version: 0.1
+#'   \item Date: 2015-03-21
+#'   \item Depends: acs (>= 1.2), data.table (>= 1.9.5)
+#'   \item URL: \url{http://github.com/sdaza/acsr}
+#' }
 #'
 #' @docType package
 #' @name acsr

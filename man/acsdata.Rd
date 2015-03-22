@@ -42,6 +42,7 @@ Because downloading the data each time one wants to compute a proportion, ratio 
 Depending on the quality of the internet connection, number of variables and level, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract".
 }
 \examples{
-acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)", level = "tract")
+api.key.install(key="*")
+acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)", level = "county")
 }
 
