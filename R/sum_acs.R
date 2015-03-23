@@ -173,7 +173,9 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
 
   else if (!is.null(data)) {
 
-    if ( is.list(data) == FALSE ) {
+
+
+    if ( !is.list(data) ) {
       stop("The data must be a list!")
     }
     else if ( is.list(data) & !(all(sapply(data, class) ==  "acs")) )
@@ -183,11 +185,11 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
     else if ( !(all(level %in% names(data)))) {
       stop("The data must cointain all the expected levels!")
     }
-    else if ( !(all(variables %in% ldata[[1]]@acs.colnames)) ) {
+    else if ( !(all(variables %in% data[[1]]@acs.colnames)) ) {
       stop("The data must cointain all the expected variables")
     }
 
-    ldata <- data
+ldata <- data
 
   } # END CONDITION ABOUT DATA
 
