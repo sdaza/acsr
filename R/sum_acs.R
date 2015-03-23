@@ -718,7 +718,7 @@ else if (format.out == "wide") {
 
   else {
     write.csv(fdata, file=file)
-    print(". . . . . .  Data exported to a CSV file")
+    print(". . . . . .  Data exported to a CSV file! Done!")
   }
 
 } # END FUNCTION
