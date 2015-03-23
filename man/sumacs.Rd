@@ -2,7 +2,7 @@
 % Please edit documentation in R/sum_acs.R
 \name{sumacs}
 \alias{sumacs}
-\title{Estimate proportions, ratios, and aggregations with their respective MOEs.}
+\title{Estimate proportions, ratios, aggregations and the respective margins of error (MOEs).}
 \usage{
 sumacs(formula, varname, method, level = "county", endyear = "2013",
   span = 5, conf.level = 0.9, one.zero = TRUE, data = NULL,
@@ -18,11 +18,11 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 
 \item{method}{A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as \code{formula} and \code{varname}.}
 
-\item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
+\item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this function are: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
 
 \item{endyear}{An integer (defaults to 2013) indicating the latest year of the data in the survey.}
 
-\item{span}{An integer indicating the span (in years) of the desired ACS data (should be 1, 3,or 5), defaults to 5.}
+\item{span}{An integer indicating the span (in years) of the desired ACS data (should be 1, 3, or 5), defaults to 5.}
 
 \item{conf.level}{Confidence level to estimate MOEs. The default value is 0.90.}
 
@@ -32,7 +32,7 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 
 \item{format.out}{Format of the output: "wide" or "long". The default is "wide".}
 
-\item{file}{The resulting output is written to a csv file rather than to the R prompt. The file name must be specified as a character string.}
+\item{file}{The resulting output is exported to a CSV file rather than to the R prompt. The file name must be specified as a character string.}
 
 \item{state}{Either the two-digit numeric FIPS code for the state, the two-letter postal abbreviation, or a character string to match in the state name (or wildcard "*" for all); setting state without other options corresponds to using census summary level 040, but it may be used in conjunction with other summary levels below. The default value is "WI".}
 
@@ -40,7 +40,7 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 
 \item{county_subdivision}{Either the numeric FIPS code (or wildcard "*" for all) for the county subdivision or a character string to match in the county subdivision name; setting state, county, and county.subdivision without other options corresponds to using census summary level 060.}
 
-\item{tract}{A six digit numeric FIPS code (or wildcard "*" for all) for the census tract, including trailing zeroes; remove decimal points; leading zeroes may be omitted; see description; tract may be used with state and county for census summary levels 140, and with state, county, and block.group for summary level 150.}
+\item{tract}{A six digit numeric FIPS code (or wildcard "*" for all) for the census tract, including trailing zeroes; remove decimal points; leading zeroes may be omitted; see description; tract may be used with state and county for census summary levels 140, and with state, county and block.group for summary level 150.}
 
 \item{block_group}{The numeric FIPS code (or wildcard "*" for all) for the block.group.  block.group may be used with state, county, and tract for census summary levels 150. The default value is "*".}
 
@@ -54,10 +54,13 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 Returns a \code{data.table/data.frame} object with the estimates and MOEs.
 }
 \description{
-The \code{sumacs} function uses outputs from the \code{\link{acs}} to compute proportions, ratios and aggregations from different formulas and levels. If this functions is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+The \code{sumacs} function uses outputs from the \code{\link{acs}} package to compute proportions, ratios and aggregations based on formulas. The function downloads the data and then estimate the formulas. If the function is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+}
+\details{
+When the standard error of a proportion cannot be estimated, the "ratio" option is used. This adjustment is done row by row.
 }
 \note{
-Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract". It is recommended to get the data using the function \code{\link{acsdata}} first, and then to use \code{sumacs}.
+Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow, especially for the levels "county.subdivision", "block.group", and "tract" (it might take more than 30 minutes).  It is recommended to get the data using the function \code{\link{acsdata}} first, and then to use \code{sumacs}.
 }
 \examples{
 api.key.install(key="*")

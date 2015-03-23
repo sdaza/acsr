@@ -2,7 +2,7 @@
 % Please edit documentation in R/acs_data.R
 \name{acsdata}
 \alias{acsdata}
-\title{Create a list containing ACS data files.}
+\title{Create a list containing ACS data files (\code{\link{acs}}).}
 \usage{
 acsdata(formula, level = "county", endyear = 2013, span = 5,
   state = "WI", county = "*", county_subdivision = "*", tract = "*",
@@ -10,9 +10,9 @@ acsdata(formula, level = "county", endyear = 2013, span = 5,
   school_district_secondary = "*", school_district_elementary = "*")
 }
 \arguments{
-\item{formula}{A character object or vector of characters containing formulas using ACS variables following the format.}
+\item{formula}{A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division.}
 
-\item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this functions could be: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
+\item{level}{A character or vector of characters specifying the geographic level of the data. The levels included in this function are: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".}
 
 \item{endyear}{An integer (defaults to 2013) indicating the latest year of the data in the survey.}
 
@@ -24,9 +24,9 @@ acsdata(formula, level = "county", endyear = 2013, span = 5,
 
 \item{county_subdivision}{Either the numeric FIPS code (or wildcard "*" for all) for the county subdivision or a character string to match in the county subdivision name; setting state, county, and county.subdivision without other options corresponds to using census summary level 060.}
 
-\item{tract}{A six digit numeric FIPS code (or wildcard "*" for all) for the census tract, including trailing zeroes; remove decimal points; leading zeroes may be omitted; see description; tract may be used with state and county for census summary levels 140, and with state, county, and block.group for summary level 150.}
+\item{tract}{A six digit numeric FIPS code (or wildcard "*" for all) for the census tract, including trailing zeroes; remove decimal points; leading zeroes may be omitted; see description; tract may be used with state and county for census summary levels 140, and with state, county and block.group for summary level 150.}
 
-\item{block_group}{The numeric FIPS code (or wildcard "*" for all) for the block.group.  block.group may be used with state, county, and tract for census summary levels 150. The default value is "*".}
+\item{block_group}{The numeric FIPS code (or wildcard "*" for all) for the block.group. block.group may be used with state, county, and tract for census summary levels 150. The default value is "*".}
 
 \item{congressional_district}{A numeric code (or wildcard "*" for all) corresponding to the desired FIPS congressional district (e.g., state="WI" and congressional.district=1); setting state and congressional.district without other options corresponds to using census summary level 500, but they may be used in conjunction with county for summary level 510. The default value is "*".}
 
@@ -41,7 +41,7 @@ Returns a list of ACS objects for different levels to be used with the \code{\li
 Because downloading the data to compute a proportion, ratio or aggregation can be slow, the \code{acsdata} function creates an object that can be used with the \code{\link{sumacs}} function. Before using this function remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \note{
-Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow (it might take more than 30 minutes), especially for the levels "county.subdivision", "block.group", and "tract".
+Depending on the quality of the internet connection, number of variables and levels, getting the ACS data can be slow especially for the levels "county.subdivision", "block.group", and "tract" (it might take more than 30 minutes).
 }
 \examples{
 api.key.install(key="*")
