@@ -45,11 +45,11 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
     stop("Vector of formulas, variable names and methods must have the same length!")
   }
 
- if (any(!grepl("\\/", formula) & lowercase(method) %in% c("proportion", "prop", "ratio"))) {
+ if (any(!grepl("\\/", formula) & tolower(method) %in% c("proportion", "prop", "ratio"))) {
   stop("Some proportion or ratio formulas do not have the "/" operator!")
  } 
 
-  if (any(grepl("\\/", formula) & lowercase(method) %in% c("aggregation", "agg"))) {
+  if (any(grepl("\\/", formula) & tolower(method) %in% c("aggregation", "agg"))) {
   stop("Some aggregation formulas do have the "/" operator!")
  } 
 
