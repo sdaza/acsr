@@ -54,7 +54,7 @@ sumacs(formula, varname, method, level = "county", endyear = "2013",
 Returns a \code{data.table/data.frame} object with the estimates and MOEs.
 }
 \description{
-The \code{sumacs} function uses outputs from the \code{\link{acs}} package to compute proportions, ratios and aggregations based on formulas. The function downloads the data and then estimate the formulas. If the function is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+The \code{sumacs} function uses outputs from the \code{\link{acs}} package to compute proportions, ratios and aggregations based on text formulas. The function downloads the data and then estimate the formulas. If the function is used without specifying any \code{data}, remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \details{
 When the standard error of a proportion cannot be estimated, the "ratio" option is used. This adjustment is done row by row.

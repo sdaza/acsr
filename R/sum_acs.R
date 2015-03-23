@@ -1,5 +1,5 @@
 #' @title Estimate proportions, ratios, aggregations and the respective margins of error (MOEs).
-#' @description The \code{sumacs} function uses outputs from the \code{\link{acs}} package to compute proportions, ratios and aggregations based on formulas. The function downloads the data and then estimate the formulas. If the function is used without specifying any \code{data}, remember to define a key before using the \code{\link{acs}} command \code{api.key.install(key="*")}.
+#' @description The \code{sumacs} function uses outputs from the \code{\link{acs}} package to compute proportions, ratios and aggregations based on text formulas. The function downloads the data and then estimate the formulas. If the function is used without specifying any \code{data}, remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division. 
 #' @param varname A character or vector of characters containing the new variables to be created. This vector must have same length as \code{formula} and \code{method}.
 #' @param method A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as \code{formula} and \code{varname}.
@@ -42,8 +42,16 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
   ###################
 
   if (identical(length(formula), length(varname), length(method)) == 0) {
-    stop("Vector of formulas, variable names and methods must to have the same length!")
+    stop("Vector of formulas, variable names and methods must have the same length!")
   }
+
+ if (any(!grepl("\\/", formula) & lowercase(method) %in% c("proportion", "prop", "ratio"))) {
+  stop("Some proportion or ratio formulas do not have the "/" operator!")
+ } 
+
+  if (any(grepl("\\/", formula) & lowercase(method) %in% c("aggregation", "agg"))) {
+  stop("Some aggregation formulas do have the "/" operator!")
+ } 
 
   ###############################
   # DEFINITION OF SOME VARIABLES
