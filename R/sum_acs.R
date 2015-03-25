@@ -41,8 +41,12 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
   # INITIAL CHECK
   ###################
 
-  if (identical(length(formula), length(varname), length(method)) == 0) {
+ if (identical(length(formula), length(varname), length(method)) == 0) {
     stop("Vector of formulas, variable names and methods must have the same length!")
+  }
+
+ if (!all(grepl("\\/|\\+|\\-", formula))) {
+    stop("Some formulas do not have any operator (+, - or /)")
   }
 
  if (any(!grepl("\\/", formula) & tolower(method) %in% c("proportion", "prop", "ratio"))) {
@@ -689,6 +693,7 @@ ldata <- data
 
 if (format.out == "long") {
   fdata <- copy(vdata)
+  
   }
 
 else if (format.out == "wide") {
