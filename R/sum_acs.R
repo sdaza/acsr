@@ -49,12 +49,12 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
     stop("Some formulas do not have any operator (+, - or /)")
   }
 
- if (all(grepl("\\/", formula) & tolower(method) %in% c("proportion", "prop", "ratio")) == 0)
+ if (any(!grepl("\\/", formula[tolower(method) %in% c("proportion", "prop", "ratio")])))
  {
   stop("Some proportion or ratio formulas do not have the / operator!")
  } 
 
-  if (all(!grepl("\\/", formula) & tolower(method) %in% c("aggregation", "agg")) == 1) {
+  if (any(grepl("\\/", formulaformula[tolower(method) %in% c("aggregation", "agg")]))) {
   stop("Some aggregation formulas do have the "/" operator!")
  } 
 
