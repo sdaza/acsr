@@ -55,7 +55,7 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
  } 
 
   if (any(grepl("\\/", formula[tolower(method) %in% c("aggregation", "agg")]))) {
-  stop("Some aggregation formulas do have the "/" operator!")
+  stop("Some aggregation formulas do have the / operator!")
  } 
 
   ###############################
