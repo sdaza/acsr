@@ -185,13 +185,13 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
     }
     else if ( is.list(data) & !(all(sapply(data, class) ==  "acs")) )
     {
-      stop("The list must cointain ACS objects!")
+      stop("The data must contain ACS objects!")
     }
     else if ( !(all(level %in% names(data)))) {
-      stop("The data must cointain all the expected levels!")
+      stop("Not all the ACS variables were found, check variable names in your formulas!")
     }
     else if ( !(all(variables %in% data[[1]]@acs.colnames)) ) {
-      stop("The data must cointain all the expected variables")
+      stop("Not all the ACS variables were found, check variable names in your formulas!")
     }
 
 ldata <- data
