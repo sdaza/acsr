@@ -210,7 +210,7 @@ ldata <- data
     # CREATE FORMULAS FROM TEXT
     constr <- gsub("\\(|\\)", "", formula[v] ) # REMOVE PARENTHESES
     constr <- gsub("\\* 100", "", constr) # REMOVE * 100
-    multiply <- grepl("\\* 100", formula[v] ) # INDEX MULTIPLICATION BY 100
+    multiply <- grepl("\\* 100", formula[v]) # INDEX MULTIPLICATION BY 100
 
     # TODO: TO CHECK IN THE FUTURE VERSION
     division <- grepl("\\/", constr)
