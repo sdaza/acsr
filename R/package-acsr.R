@@ -15,8 +15,8 @@
 #' @details
 #'
 #' \itemize{
-#'   \item Version: 0.2
-#'   \item Date: 2015-04-02
+#'   \item Version: 0.3
+#'   \item Date: 2015-06-10
 #'   \item Depends: acs (>= 1.2), data.table (>= 1.9.5)
 #'   \item URL: \url{http://github.com/sdaza/acsr}
 #' }

@@ -1,6 +1,6 @@
 #' @title Estimate proportions, ratios, aggregations and the respective margins of error (MOEs).
 #' @description The \code{sumacs} function uses outputs from the \code{\link{acs}} package to compute proportions, ratios and aggregations based on text formulas. The function downloads the data and then estimate the formulas. If the function is used without specifying any \code{data}, remember to define a key using the \code{\link{acs}} command \code{api.key.install(key="*")}.
-#' @param formula A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division. 
+#' @param formula A character or vector of characters containing formulas using ACS variables. + - operators can be included. / defines a division. When the formula contains "* 100", the final statistic and MOE is multiply by 100.  
 #' @param varname A character or vector of characters containing the new variables to be created. This vector must have same length as \code{formula} and \code{method}.
 #' @param method A character or vector of characters defining the type of estimate expected: "proportion", "ratio", "aggregation". This vector must have same length as \code{formula} and \code{varname}.
 #' @param level A character or vector of characters specifying the geographic level of the data. The levels included in this function are: "state", "county", "county.subdivision", "tract", "block.group", "congressional.district", "school.district.secondary", "school.district.elementary". The default value is "county".
@@ -75,7 +75,7 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
   print (paste0(". . . . . .  New variables : ", newvars))
 
   #########################################
-  # GET DATA FOR ALL THE VARIABLES FIRST
+  # GET DATA FOR ALL THE VARIABLES FIRST (TIME CONSUMING)
   #########################################
 
   if (is.null(data)) {
@@ -176,14 +176,12 @@ sumacs  <- function(formula, varname, method, level = "county", endyear = "2013"
 
   } # FIRST CONDITION
 
-  else if (!is.null(data)) {
-
-
+  else if ( !is.null(data) ) {
 
     if ( !is.list(data) ) {
       stop("The data must be a list!")
     }
-    else if ( is.list(data) & !(all(sapply(data, class) ==  "acs")) )
+    else if ( is.list(data) & !( all(sapply(data, class) ==  "acs") ) )
     {
       stop("The data must contain ACS objects!")
     }
@@ -206,18 +204,19 @@ ldata <- data
 
   vdata <- data.table()
 
-
   for (v in 1:length(varname) ) {
+
 
     # CREATE FORMULAS FROM TEXT
     constr <- gsub("\\(|\\)", "", formula[v] ) # REMOVE PARENTHESES
     constr <- gsub("\\* 100", "", constr) # REMOVE * 100
+    multiply <- grepl("\\* 100", formula[v] ) # INDEX MULTIPLICATION BY 100
 
     # TODO: TO CHECK IN THE FUTURE VERSION
     division <- grepl("\\/", constr)
 
     #####################
-    # CONDITIONS
+    # CONDITIONS FORMULAS
     #####################
 
     if (tolower(method[v]) %in% c("proportion", "prop", "ratio") & division == TRUE) {
@@ -314,6 +313,7 @@ ldata <- data
         den <- estimate(eval(parse(text=dt)))
 
         p <- num / den
+
         # p[den == 0] <- NA
 
         # DEFINITION OF ERROR
@@ -413,8 +413,7 @@ ldata <- data
           }
         }
 
-        # COMPUTING STANDARD ERRORS FOR PROPORTION AND RATIOS (CHECK)
-
+        # COMPUTING STANDARD ERRORS FOR PROPORTIONS AND RATIOS (CHECK)
 
         if ( tolower(method[v]) %in% c("proportion", "prop") ) {
 
@@ -462,7 +461,7 @@ ldata <- data
 
         est <- estimate(dat)
         err <- standard.error(dat)
-        p  <-  estimate(eval(parse(text=ft)))
+        p  <-  estimate(eval(parse(text = ft)))
 
         # ONE ZERO  COMPUTATION
 
@@ -534,6 +533,8 @@ ldata <- data
       # CREATE DATASET
       #######################
 
+
+
       # CONDITIONS
 
       if (level[l] == "state") {
@@ -549,8 +550,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -567,8 +568,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -586,8 +587,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -604,8 +605,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -624,8 +625,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -643,8 +644,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -661,8 +662,8 @@ ldata <- data
           sch_dist_sec = NA,
           sch_dist_ele = geo$schooldistrictelementary,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -679,8 +680,8 @@ ldata <- data
           sch_dist_sec = geo$schooldistrictsecondary,
           sch_dist_ele = NA,
           var_name = varname[v],
-          est = as.vector(p),
-          moe = as.vector(new_error * conf.level)
+          est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
+          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
 
@@ -688,7 +689,7 @@ ldata <- data
 
     } # END LEVEL LOOP
 
-  } # END VARIABLE LOO
+  } # END VARIABLE LOOP
 
   print(". . . . . .  Formatting output")
 
@@ -708,7 +709,7 @@ else if (format.out == "wide") {
 
   ids <- c("stfid","sumlevel","st_fips","cnty_fips","cnty_sub_fips","tract_fips","block_group","cong_dist","sch_dist_sec","sch_dist_ele")
 
-  vars  <- names(wdata[,!ids, with=FALSE])
+  vars  <- names(wdata[,!ids, with = FALSE])
   vars <- sort(vars)
   fdata <- wdata[, c(ids, vars), with = FALSE]
   setkey(fdata, sumlevel)
