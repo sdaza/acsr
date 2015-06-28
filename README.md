@@ -11,6 +11,6 @@ library(acsr)
 
 You have to install `devtools` in R first!
 
-### How to use?
+### How to use it?
 
 `?acsr`
