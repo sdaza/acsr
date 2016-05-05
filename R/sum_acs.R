@@ -708,8 +708,8 @@ else if (format.out == "wide") {
   vnames <- sort(unique(vdata$var_name))
   ids <- c("stfid","sumlevel","st_fips","cnty_fips","cnty_sub_fips","tract_fips","block_group","cong_dist","sch_dist_sec","sch_dist_ele")
 
-  a <- wdata[, grep("moe", names(wdata), invert = TRUE), with = FALSE]
-  b <- wdata[, grep("est", names(wdata), invert = TRUE), with = FALSE]
+  a <- wdata[, grep("_moe|moe_", names(wdata), invert = TRUE), with = FALSE]
+  b <- wdata[, grep("_est|est_", names(wdata), invert = TRUE), with = FALSE]
   setnames(a, names(a), gsub("_est|est_", "", names(a)))
   setnames(b, names(b), gsub("_moe|moe_", "", names(b)))
   a <- a[, sort(names(a[,!ids, with = FALSE])), with = FALSE]
