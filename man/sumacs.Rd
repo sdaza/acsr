@@ -79,7 +79,7 @@ Returns a \code{data.table/data.frame} object with the estimates and
 \description{
 The \code{sumacs} function uses outputs from the
   \code{\link{acs}} package to compute proportions, ratios and aggregations
-  based on text formulas, or simply to extract variables. The function
+  based on text formulas, or simply extract variables. The function
   downloads the data and then estimate the formulas. If the function is used
   without specifying any \code{data}, remember to define a key using the
   \code{\link{acs}} command \code{api.key.install(key="*")}.
