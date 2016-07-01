@@ -10,7 +10,7 @@ constr <- gsub("\\(|\\)", "", formula) #
 constr <- gsub("\\* 100", "", constr)
 vars  <- unlist(strsplit(constr, "[\\+]|[\\-]|[\\/]|[\\*]"))
 vars <- gsub("[[:space:]]", "", vars)
-vars <- toupper(vars)
+vars <- toupper(vars) # I am getting all variables
 vars <- vars[!duplicated(vars)]
 return(vars)
 }
