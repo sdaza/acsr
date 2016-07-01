@@ -124,6 +124,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
   if (method == "variables") {
     varname <- variables
+    method <- rep("variables", length(varname))
   }
 
   newvars <- length(varname)
