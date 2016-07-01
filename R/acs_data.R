@@ -77,8 +77,8 @@ if ( !level[i] %in% lnames ) { stop("Some levels were not found, please check!")
   nvars <- length(variables)
   nlevels <- length(level)
 
-  print (paste0(". . . . . .  ACS variables : ", nvars))
-  print (paste0(". . . . . .  Levels : ", nlevels))
+  #print (paste0(". . . . . .  ACS variables : ", nvars))
+  #print (paste0(". . . . . .  Levels : ", nlevels))
 
   ldata <- list()
 
