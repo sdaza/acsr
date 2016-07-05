@@ -36,7 +36,7 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
-#' @param endyear An integer (defaults to 2013) indicating the latest year of
+#' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3, or 5), defaults to 5.
@@ -64,7 +64,7 @@
 #' # api.key.install(key="*")
 #' sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)", varname = "langspan0913", method = "prop")
 #' sumacs(c("b16004_004", "b16004_026"), level = "msa")
-sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = "2013", span = 5, conf.level = 0.90, one.zero = TRUE, data = NULL, format.out = "wide", file = NULL,
+sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = "2014", span = 5, conf.level = 0.90, one.zero = TRUE, data = NULL, format.out = "wide", file = NULL,
                         us = "*",
                         region = "*",
                         division = "*",
