@@ -93,10 +93,10 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
   # initial checks
   ###################
 
- if (!all(grepl("\\/|\\+|\\-", formula))) {
-    # stop("Some formulas do not have any operator (+, - or /)")
-    method <- rep("variables", length(varname))
-  }
+ # if (!all(grepl("\\/|\\+|\\-", formula))) {
+ #    # stop("Some formulas do not have any operator (+, - or /)")
+ #    method <- rep("variables", length(varname))
+ #  }
 
   if ((identical(length(formula), length(varname), length(method)) == 0)) {
     stop("Vector of formulas, variable names and methods must have the same length!")
@@ -121,10 +121,6 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
   nvars <- length(variables)
   nlevels <- length(level)
-
-  if (method == "variables") {
-    varname <- variables
-  }
 
   newvars <- length(varname)
 
@@ -265,7 +261,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       # only variables
       ############################
 
-      if (method[v] == "variables")
+      if (method[v] == "variable")
       {
        p <- as.vector(dat@estimate[, v])
        new_error <- as.vector(dat@standard.error[, v])
