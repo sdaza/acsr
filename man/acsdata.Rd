@@ -4,7 +4,7 @@
 \alias{acsdata}
 \title{Create a list containing ACS data files (\code{\link{acs}}).}
 \usage{
-acsdata(formula, level = "state", endyear = 2013, span = 5, us = "*",
+acsdata(formula, level = "state", endyear = 2014, span = 5, us = "*",
   region = "*", division = "*", state = "WI", county = "*",
   county.subdivision = "*", place = "*", tract = "*", block.group = "*",
   msa = "*", csa = "*", necta = "*", urban.area = "*",
@@ -35,7 +35,7 @@ ACS variables. + - operators can be included. / defines a division.}
   950 state, school.district.elementary \cr 960 state,
   school.district.secondary \cr 970 state, school.district.unified \cr}
 
-\item{endyear}{An integer (defaults to 2013) indicating the latest year of
+\item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data

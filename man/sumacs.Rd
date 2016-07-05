@@ -6,7 +6,7 @@
   of error (MOEs).}
 \usage{
 sumacs(formula, varname = NULL, method = NULL, level = "state",
-  endyear = "2013", span = 5, conf.level = 0.9, one.zero = TRUE,
+  endyear = "2014", span = 5, conf.level = 0.9, one.zero = TRUE,
   data = NULL, format.out = "wide", file = NULL, us = "*",
   region = "*", division = "*", state = "WI", county = "*",
   county.subdivision = "*", place = "*", tract = "*", block.group = "*",
@@ -50,7 +50,7 @@ not needed when getting only variables.}
   950 state, school.district.elementary \cr 960 state,
   school.district.secondary \cr 970 state, school.district.unified \cr}
 
-\item{endyear}{An integer (defaults to 2013) indicating the latest year of
+\item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
