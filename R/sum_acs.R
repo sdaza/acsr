@@ -36,7 +36,7 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
-#' @param endyear An integer (defaults to 2014) indicating the latest year of
+#' @param endyear An integer (defaults to 2014  ) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3, or 5), defaults to 5.
@@ -169,7 +169,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       stop("The data must contain ACS objects!")
     }
     else if ( !(all(level %in% names(data)))) {
-      stop("Not all the ACS variables were found, check variable names in your formulas!")
+      stop("Not all levels coincide with the data")
     }
     else if ( !(all(variables %in% data[[1]]@acs.colnames)) ) {
       stop("Not all the ACS variables were found, check variable names in your formulas!")

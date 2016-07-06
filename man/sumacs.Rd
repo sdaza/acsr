@@ -50,7 +50,7 @@ not needed when getting only variables.}
   950 state, school.district.elementary \cr 960 state,
   school.district.secondary \cr 970 state, school.district.unified \cr}
 
-\item{endyear}{An integer (defaults to 2014) indicating the latest year of
+\item{endyear}{An integer (defaults to 2014  ) indicating the latest year of
 the data in the survey.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
