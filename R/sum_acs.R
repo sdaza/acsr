@@ -129,6 +129,9 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
   print (paste0(". . . . . .  Levels : ", nlevels))
   print (paste0(". . . . . .  New variables : ", newvars))
 
+# where I will save results
+output <- list()
+
   #########################################
   # get data for all data (time consuming)
   #########################################
@@ -186,7 +189,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
   print(". . . . . .  Creating variables")
 
-  vdata <- data.table::data.table()
+  vdata <- list()
 
   # start loop by variable
   for (v in 1:length(varname) ) {
@@ -527,8 +530,9 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       # create datasets (one by one!)
       #######################
 
+
  if (level[l] == "us") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "010",
           region = NA,
@@ -559,7 +563,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
  if (level[l] == "region") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "020",
           region = geo$region,
@@ -590,7 +594,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
  if (level[l] == "division") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "030",
           region = NA,
@@ -622,7 +626,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
       if (level[l] == "state") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = sprintf("%02d", as.numeric(geo$state)),
           sumlevel = "040",
           region = NA,
@@ -653,7 +657,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "county") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county))),
           sumlevel = "050",
           region = NA,
@@ -685,7 +689,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
       if (level[l] == "county.subdivision") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%05d", as.numeric(geo$countysubdivision))),
           sumlevel = "060",
           region = NA,
@@ -717,7 +721,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
       if (level[l] == "tract") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract))),
           sumlevel = "140",
           region = NA,
@@ -748,7 +752,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "block.group") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(geo$state, sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract)), as.numeric(geo$blockgroup)),
           sumlevel = "150",
           region = NA,
@@ -779,7 +783,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "place") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(geo$state, sprintf("%03d", as.numeric(geo$county))),
           sumlevel = "160",
           region = NA,
@@ -810,7 +814,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "american.indian.area") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "250",
           region = NA,
@@ -841,7 +845,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
     if (level[l] == "puma") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "795",
           region = NA,
@@ -873,7 +877,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
         if (level[l] == "msa") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "320",
           region = NA,
@@ -904,7 +908,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
         if (level[l] == "csa") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "340",
           region = NA,
@@ -935,7 +939,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
         if (level[l] == "necta") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "350",
           region = NA,
@@ -966,7 +970,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
         if (level[l] == "urban.area") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "400",
           region = NA,
@@ -998,7 +1002,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
       if (level[l] == "congressional.district") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%02d", as.numeric(geo$congressionaldistrict))),
           sumlevel = "500",
           region = NA,
@@ -1030,7 +1034,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
       if (level[l] == "state.legislative.district.upper") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictupper))),
           sumlevel = "610",
           region = NA,
@@ -1061,7 +1065,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
     if (level[l] == "state.legislative.district.lower") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictlower))),
           sumlevel = "620",
           region = NA,
@@ -1093,7 +1097,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
 
 
       if (level[l] == "zip.code") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = as.character(NA),
           sumlevel = "860",
           region = NA,
@@ -1124,7 +1128,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "school.district.elementary") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictelementary))),
           sumlevel = "950",
           region = NA,
@@ -1155,7 +1159,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "school.district.secondary") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictsecondary))),
           sumlevel = "960",
           region = NA,
@@ -1186,7 +1190,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
       }
 
       if (level[l] == "school.district.unified") {
-        output <- data.table::data.table(
+        output <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictunified))),
           sumlevel = "970",
           region = NA,
@@ -1216,30 +1220,34 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
         )
       }
 
-      vdata <- rbind(vdata, output)
+      vdata[[ paste0(v,l) ]] <- output
 
     } # end level loop
 
   if ( trace ) {
-  print(paste0(". . . . . .  ", round( v / newvars * 100, 0), "%"))
+  print(paste0(". . . . . .  ", round( v / newvars * 100, 1), "%"))
   }
 
   } # end variable loop
 
   print(". . . . . .  Formatting output")
 
+  mdata <- rbindlist(vdata)
+
 if (format.out == "long") {
 
-  fdata <- copy(vdata)
+  fdata <- copy(mdata)
+  # remove missing column
   fdata <- fdata[, which(unlist(lapply(fdata, function(x)!all(is.na(x))))), with = FALSE]
+
   }
 
 else if (format.out == "wide") {
 
-  wdata <- data.table::dcast(vdata, geoid + sumlevel +  region + division + st_fips + cnty_fips + cnty_sub_fips + tract_fips + block_group + place + indian_area + msa + csa + necta + urban_area + cong_dist + leg_dist_upper + leg_dist_lower + puma + zip + sch_dist_ele + sch_dist_sec + sch_dist_uni ~ var_name, value.var = c("est", "moe"))
+  wdata <- data.table::dcast(mdata, geoid + sumlevel +  region + division + st_fips + cnty_fips + cnty_sub_fips + tract_fips + block_group + place + indian_area + msa + csa + necta + urban_area + cong_dist + leg_dist_upper + leg_dist_lower + puma + zip + sch_dist_ele + sch_dist_sec + sch_dist_uni ~ var_name, value.var = c("est", "moe"))
 
   # awful way to deal with names (to improve!)
-  vnames <- sort(unique(vdata$var_name))
+  vnames <- sort(unique(mdata$var_name))
 
   ids <- c("sumlevel", "geoid", "region","division","st_fips","cnty_fips","cnty_sub_fips","tract_fips","block_group","place","indian_area","msa","csa","necta","urban_area","cong_dist","leg_dist_upper","leg_dist_lower","puma","zip","sch_dist_ele","sch_dist_sec","sch_dist_uni")
 
