@@ -784,7 +784,7 @@ output <- list()
 
       if (level[l] == "place") {
         output <- data.table(
-          geoid = paste0(geo$state, sprintf("%03d", as.numeric(geo$county))),
+          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$place))),
           sumlevel = "160",
           region = NA,
           division = NA,
