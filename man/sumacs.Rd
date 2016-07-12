@@ -100,6 +100,5 @@ Depending on the quality of the internet connection, number of
 \examples{
 # api.key.install(key="*")
 sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)", varname = "langspan0913", method = "prop")
-sumacs(c("b16004_004", "b16004_026"), level = "msa")
 }
 

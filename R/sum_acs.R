@@ -64,7 +64,6 @@
 #' @examples
 #' # api.key.install(key="*")
 #' sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)", varname = "langspan0913", method = "prop")
-#' sumacs(c("b16004_004", "b16004_026"), level = "msa")
 sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = "2014", span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide", file = NULL,
                         us = "*",
                         region = "*",
