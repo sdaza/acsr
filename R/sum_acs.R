@@ -531,30 +531,9 @@ output <- list()
 
 
  if (level[l] == "us") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "010",
-          region = NA,
-          division = NA,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -562,30 +541,10 @@ output <- list()
       }
 
  if (level[l] == "region") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]] <- data.table(
           geoid = as.character(NA),
           sumlevel = "020",
           region = geo$region,
-          division = NA,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -593,30 +552,10 @@ output <- list()
       }
 
  if (level[l] == "division") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "030",
-          region = NA,
           division = geo$division,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -625,30 +564,10 @@ output <- list()
 
 
       if (level[l] == "state") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = sprintf("%02d", as.numeric(geo$state)),
           sumlevel = "040",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -656,30 +575,11 @@ output <- list()
       }
 
       if (level[l] == "county") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county))),
           sumlevel = "050",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
           cnty_fips = geo$county,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -688,30 +588,12 @@ output <- list()
 
 
       if (level[l] == "county.subdivision") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%05d", as.numeric(geo$countysubdivision))),
           sumlevel = "060",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
           cnty_fips = geo$county,
           cnty_sub_fips = geo$countysubdivision,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -720,30 +602,12 @@ output <- list()
 
 
       if (level[l] == "tract") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract))),
           sumlevel = "140",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
           cnty_fips = geo$county,
-          cnty_sub_fips = NA,
           tract_fips = geo$tract,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -751,30 +615,13 @@ output <- list()
       }
 
       if (level[l] == "block.group") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(geo$state, sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract)), as.numeric(geo$blockgroup)),
           sumlevel = "150",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
           cnty_fips = geo$county,
-          cnty_sub_fips = NA,
           tract_fips = geo$tract,
           block_group = geo$blockgroup,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -782,30 +629,11 @@ output <- list()
       }
 
       if (level[l] == "place") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$place))),
           sumlevel = "160",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
           place = geo$place,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -813,30 +641,10 @@ output <- list()
       }
 
       if (level[l] == "american.indian.area") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "250",
-          region = NA,
-          division = NA,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
           indian_area = geo$americanindianarea,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -844,30 +652,11 @@ output <- list()
       }
 
     if (level[l] == "puma") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "795",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
           puma = geo$publicusemicrodataarea,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -876,30 +665,11 @@ output <- list()
 
 
         if (level[l] == "msa") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "320",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
           msa = geo$metropolitanstatisticalareamicropolitanstatisticalarea,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -907,30 +677,11 @@ output <- list()
       }
 
         if (level[l] == "csa") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "340",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
           csa = geo$combinedstatisticalarea,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -938,30 +689,10 @@ output <- list()
       }
 
         if (level[l] == "necta") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "350",
-          region = NA,
-          division = NA,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
           necta = geo$newenglandcityandtownarea,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -969,30 +700,10 @@ output <- list()
       }
 
         if (level[l] == "urban.area") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "400",
-          region = NA,
-          division = NA,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
           urban_area = geo$urbanarea,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1001,30 +712,11 @@ output <- list()
 
 
       if (level[l] == "congressional.district") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%02d", as.numeric(geo$congressionaldistrict))),
           sumlevel = "500",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
           cong_dist = geo$congressionaldistrict,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1033,30 +725,11 @@ output <- list()
 
 
       if (level[l] == "state.legislative.district.upper") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictupper))),
           sumlevel = "610",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
           leg_dist_upper = geo$statelegislativedistrictupper,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1064,30 +737,11 @@ output <- list()
       }
 
     if (level[l] == "state.legislative.district.lower") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictlower))),
           sumlevel = "620",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
           leg_dist_lower = geo$statelegislativedistrictlower,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1096,30 +750,10 @@ output <- list()
 
 
       if (level[l] == "zip.code") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "860",
-          region = NA,
-          division = NA,
-          st_fips = NA,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
           zip = geo$zipcodetabulationarea,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1127,30 +761,11 @@ output <- list()
       }
 
       if (level[l] == "school.district.elementary") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictelementary))),
           sumlevel = "950",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
           sch_dist_ele = geo$schooldistrictelementary,
-          sch_dist_sec = NA,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1158,30 +773,11 @@ output <- list()
       }
 
       if (level[l] == "school.district.secondary") {
-        output <- data.table(
+        vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictsecondary))),
           sumlevel = "960",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
           sch_dist_sec = geo$schooldistrictsecondary,
-          sch_dist_uni = NA,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
@@ -1189,37 +785,16 @@ output <- list()
       }
 
       if (level[l] == "school.district.unified") {
-        output <- data.table(
+         vdata[[ paste0(v,l) ]] <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictunified))),
           sumlevel = "970",
-          region = NA,
-          division = NA,
           st_fips = geo$state,
-          cnty_fips = NA,
-          cnty_sub_fips = NA,
-          tract_fips = NA,
-          block_group = NA,
-          place = NA,
-          indian_area = NA,
-          msa = NA,
-          csa = NA,
-          necta = NA,
-          urban_area = NA,
-          cong_dist = NA,
-          leg_dist_upper = NA,
-          leg_dist_lower = NA,
-          puma = NA,
-          zip = NA,
-          sch_dist_ele = NA,
-          sch_dist_sec = NA,
           sch_dist_uni = geo$schooldistrictunified,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
           moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
         )
       }
-
-      vdata[[ paste0(v,l) ]] <- output
 
     } # end level loop
 
@@ -1231,24 +806,27 @@ output <- list()
 
   print(". . . . . .  Formatting output")
 
-  mdata <- rbindlist(vdata)
+  mdata <- rbindlist(vdata, fill = TRUE)
 
 if (format.out == "long") {
 
   fdata <- copy(mdata)
-  # remove missing column
-  fdata <- fdata[, which(unlist(lapply(fdata, function(x)!all(is.na(x))))), with = FALSE]
 
   }
 
 else if (format.out == "wide") {
 
-  wdata <- data.table::dcast(mdata, geoid + sumlevel +  region + division + st_fips + cnty_fips + cnty_sub_fips + tract_fips + block_group + place + indian_area + msa + csa + necta + urban_area + cong_dist + leg_dist_upper + leg_dist_lower + puma + zip + sch_dist_ele + sch_dist_sec + sch_dist_uni ~ var_name, value.var = c("est", "moe"))
+  # dcast variables
+  namesformula <- grep("var_name|est|moe", names(mdata), value = TRUE, invert = TRUE)
+  ff <- paste(paste(namesformula, collapse = " + "), " ~ var_name")
+  wdata <- data.table::dcast(mdata, formula(ff), value.var = c("est", "moe"))
 
   # awful way to deal with names (to improve!)
   vnames <- sort(unique(mdata$var_name))
 
-  ids <- c("sumlevel", "geoid", "region","division","st_fips","cnty_fips","cnty_sub_fips","tract_fips","block_group","place","indian_area","msa","csa","necta","urban_area","cong_dist","leg_dist_upper","leg_dist_lower","puma","zip","sch_dist_ele","sch_dist_sec","sch_dist_uni")
+  ids <- c( "sumlevel", "geoid", "region","division","st_fips","cnty_fips","cnty_sub_fips","tract_fips","block_group","place","indian_area","msa","csa","necta","urban_area","cong_dist","leg_dist_upper","leg_dist_lower","puma","zip","sch_dist_ele","sch_dist_sec","sch_dist_uni")
+
+  ids <- ids[ids %in% names(wdata)]
 
   a <- wdata[, grep("_moe|moe_", names(wdata), invert = TRUE), with = FALSE]
   b <- wdata[, grep("_est|est_", names(wdata), invert = TRUE), with = FALSE]
@@ -1274,11 +852,6 @@ else if (format.out == "wide") {
   # final dataset
   fdata <- wdata[, c(ids, vars), with = FALSE]
   data.table::setkey(fdata, sumlevel)
-
-  # remove id variables with only NA
-  idvars <- c("region","division","st_fips","cnty_fips","cnty_sub_fips","tract_fips","block_group","place","indian_area","msa","csa","necta","urban_area","cong_dist","leg_dist_upper","leg_dist_lower","puma","zip","sch_dist_ele","sch_dist_sec","sch_dist_uni")
-
-fdata <- fdata[, which(unlist(lapply(fdata, function(x)!all(is.na(x))))), with = FALSE]
 
 }
 # write csv
