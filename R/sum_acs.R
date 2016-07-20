@@ -190,8 +190,10 @@ output <- list()
 
   vdata <- list()
 
+  # lower case methods
+  method <- tolower(method)
   # start loop by variable
-  for (v in 1:length(varname) ) {
+  for (v in seq_along(varname) ) {
 
     # create formulas from text
     constr <- gsub("\\(|\\)", "", formula[v] ) # remove parentheses
@@ -205,7 +207,7 @@ output <- list()
     # condition formulas
     #####################
 
-    if (tolower(method[v]) %in% c("proportion", "prop", "ratio") & division == TRUE) {
+    if (method[v] %in% c("proportion", "prop", "ratio") & division == TRUE) {
 
       # division (proportion or ratio)
       form <- strsplit(constr, "/") # split to get numerator and denominator
@@ -236,7 +238,7 @@ output <- list()
 
     }
 
-    if (tolower(method[v]) %in% c("aggregation", "agg") & division == FALSE) {
+    if (method[v] %in% c("aggregation", "agg") & division == FALSE) {
 
       # EXTRACT OPERATORS
       oper <- strsplit(constr, "[aA-zZ]*[0-9]*")
@@ -255,7 +257,7 @@ output <- list()
 
     # nested level loop
 
-    for (l in 1:length(level)) {
+    for (l in seq_along(level) ) {
 
       dat <- ldata[[level[l]]]
       geo <- dat@geography
@@ -274,7 +276,7 @@ output <- list()
       # proportion or ratios
       ######################
 
-      if (tolower(method[v]) %in% c("proportion", "prop", "ratio") & division == TRUE) {
+      if (method[v] %in% c("proportion", "prop", "ratio") & division == TRUE) {
 
         wn <- which(dat@acs.colnames %in% nume)
         wd <- which(dat@acs.colnames %in% deno)
@@ -309,6 +311,12 @@ output <- list()
         den <- acs::estimate(eval(parse(text=dt)))
 
         p <- num / den
+
+        if ( method[v] %in% c("prop", "proportion") & any( na.omit(as.vector(p)) > 1))  {
+
+          stop("The proportion is higher than 1, to use method ratio?")
+
+        }
 
         # p[den == 0] <- NA
 
@@ -411,7 +419,7 @@ output <- list()
 
         # computing standard errors for proportions and ratios (checked!)
 
-        if ( tolower(method[v]) %in% c("proportion", "prop") ) {
+        if ( method[v] %in% c("proportion", "prop") ) {
 
           suppressWarnings(
             new_error <- ifelse((err_num - ( p ^ 2 * err_den) ) < 0 | is.na( err_num - (p ^ 2 * err_den)),
@@ -421,7 +429,7 @@ output <- list()
 
         }
 
-        if (tolower(method[v]) %in% c("ratio")) {
+        if (method[v] %in% c("ratio")) {
           suppressWarnings(
             new_error <-  sqrt(err_num + (p ^ 2 * err_den)) / den
           )
@@ -435,7 +443,7 @@ output <- list()
       # aggregation
       ##################
 
-      if (tolower(method[v]) %in% c("aggregation", "agg") & division == FALSE) {
+      if (method[v] %in% c("aggregation", "agg") & division == FALSE) {
 
         wa <- which(dat@acs.colnames %in% variable)
 
@@ -531,50 +539,105 @@ output <- list()
 
 
  if (level[l] == "us") {
+
+          if (multiply == TRUE)
+            { cmoe <-  as.vector(new_error * conf.level * 100)
+              if (method[v] %in% c("prop", "proportion"))
+                { cmoe[cmoe > 100] <- 100 }
+            }
+         else { cmoe <-  as.vector(new_error * conf.level)
+              if (method[v] %in% c("prop", "proportion"))
+                { cmoe[cmoe > 1] <- 1 }
+            }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "010",
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
  if (level[l] == "region") {
+
+        if (multiply == TRUE)
+          { cmoe <-  as.vector(new_error * conf.level * 100)
+            if (method[v] %in% c("prop", "proportion"))
+              { cmoe[cmoe > 100] <- 100 }
+          }
+       else { cmoe <-  as.vector(new_error * conf.level)
+            if (method[v] %in% c("prop", "proportion"))
+              { cmoe[cmoe > 1] <- 1 }
+          }
+
         vdata[[ paste0(v,l) ]] <- data.table(
           geoid = as.character(NA),
           sumlevel = "020",
           region = geo$region,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
  if (level[l] == "division") {
+
+          if (multiply == TRUE)
+            { cmoe <-  as.vector(new_error * conf.level * 100)
+              if (method[v] %in% c("prop", "proportion"))
+                { cmoe[cmoe > 100] <- 100 }
+            }
+         else { cmoe <-  as.vector(new_error * conf.level)
+              if (method[v] %in% c("prop", "proportion"))
+                { cmoe[cmoe > 1] <- 1 }
+            }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "030",
           division = geo$division,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
       if (level[l] == "state") {
+
+        if (multiply == TRUE)
+          { cmoe <-  as.vector(new_error * conf.level * 100)
+            if (method[v] %in% c("prop", "proportion"))
+              { cmoe[cmoe > 100] <- 100 }
+          }
+       else { cmoe <-  as.vector(new_error * conf.level)
+            if (method[v] %in% c("prop", "proportion"))
+              { cmoe[cmoe > 1] <- 1 }
+          }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = sprintf("%02d", as.numeric(geo$state)),
           sumlevel = "040",
           st_fips = geo$state,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "county") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county))),
           sumlevel = "050",
@@ -582,12 +645,23 @@ output <- list()
           cnty_fips = geo$county,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
       if (level[l] == "county.subdivision") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%05d", as.numeric(geo$countysubdivision))),
           sumlevel = "060",
@@ -596,12 +670,23 @@ output <- list()
           cnty_sub_fips = geo$countysubdivision,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
       if (level[l] == "tract") {
+
+           if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract))),
           sumlevel = "140",
@@ -610,11 +695,22 @@ output <- list()
           tract_fips = geo$tract,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "block.group") {
+
+           if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(geo$state, sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract)), as.numeric(geo$blockgroup)),
           sumlevel = "150",
@@ -624,11 +720,22 @@ output <- list()
           block_group = geo$blockgroup,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "place") {
+
+           if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$place))),
           sumlevel = "160",
@@ -636,22 +743,44 @@ output <- list()
           place = geo$place,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "american.indian.area") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "250",
           indian_area = geo$americanindianarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
     if (level[l] == "puma") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "795",
@@ -659,12 +788,23 @@ output <- list()
           puma = geo$publicusemicrodataarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
         if (level[l] == "msa") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "320",
@@ -672,11 +812,22 @@ output <- list()
           msa = geo$metropolitanstatisticalareamicropolitanstatisticalarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
         if (level[l] == "csa") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
           sumlevel = "340",
@@ -684,34 +835,67 @@ output <- list()
           csa = geo$combinedstatisticalarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
         if (level[l] == "necta") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "350",
           necta = geo$newenglandcityandtownarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
         if (level[l] == "urban.area") {
+
+          if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "400",
           urban_area = geo$urbanarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
       if (level[l] == "congressional.district") {
+
+            if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%02d", as.numeric(geo$congressionaldistrict))),
           sumlevel = "500",
@@ -719,12 +903,23 @@ output <- list()
           cong_dist = geo$congressionaldistrict,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
       if (level[l] == "state.legislative.district.upper") {
+
+           if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictupper))),
           sumlevel = "610",
@@ -732,11 +927,22 @@ output <- list()
           leg_dist_upper = geo$statelegislativedistrictupper,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
     if (level[l] == "state.legislative.district.lower") {
+
+           if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictlower))),
           sumlevel = "620",
@@ -744,23 +950,45 @@ output <- list()
           leg_dist_lower = geo$statelegislativedistrictlower,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
 
       if (level[l] == "zip.code") {
+
+            if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = as.character(NA),
           sumlevel = "860",
           zip = geo$zipcodetabulationarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "school.district.elementary") {
+
+           if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictelementary))),
           sumlevel = "950",
@@ -768,11 +996,22 @@ output <- list()
           sch_dist_ele = geo$schooldistrictelementary,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "school.district.secondary") {
+
+            if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
         vdata[[ paste0(v,l) ]]  <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictsecondary))),
           sumlevel = "960",
@@ -780,11 +1019,22 @@ output <- list()
           sch_dist_sec = geo$schooldistrictsecondary,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
       if (level[l] == "school.district.unified") {
+
+            if (multiply == TRUE)
+              { cmoe <-  as.vector(new_error * conf.level * 100)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 100] <- 100 }
+              }
+           else { cmoe <-  as.vector(new_error * conf.level)
+                if (method[v] %in% c("prop", "proportion"))
+                  { cmoe[cmoe > 1] <- 1 }
+              }
+
          vdata[[ paste0(v,l) ]] <- data.table(
           geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictunified))),
           sumlevel = "970",
@@ -792,7 +1042,7 @@ output <- list()
           sch_dist_uni = geo$schooldistrictunified,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
-          moe = if (multiply == TRUE) { as.vector(new_error * conf.level * 100)} else {as.vector(new_error * conf.level)}
+          moe = cmoe
         )
       }
 
