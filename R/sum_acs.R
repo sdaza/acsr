@@ -86,7 +86,9 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
                         american.indian.area = "*",
                         school.district.elementary = "*",
                         school.district.secondary = "*",
-                        school.district.unified = "*")  {
+                        school.district.unified = "*",
+                        combine = FALSE,
+                        combine.name = NULL)  {
 
 
   ##################
@@ -159,7 +161,10 @@ output <- list()
                         american.indian.area = american.indian.area,
                         school.district.elementary = school.district.elementary,
                         school.district.secondary = school.district.secondary,
-                        school.district.unified = school.district.unified)
+                        school.district.unified = school.district.unified,
+                        combine = combine,
+                        combine.name = combine.name
+                        )
   }
 
   else if ( !is.null(data) ) {
