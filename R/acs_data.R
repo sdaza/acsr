@@ -28,6 +28,8 @@
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3,or 5), defaults to 5.
+#' @param combine Whether the geographies are to be combined when the data is downloaded.
+#' @param combine.name Label for the aggregate geography when data are combined. The default value is \code{aggregate}.
 #' @return Returns a list of ACS objects for different levels to be used with
 #'   the \code{\link{sumacs}} function.
 #' @note Depending on the quality of the internet connection, number of
@@ -191,11 +193,20 @@ if ( !level[i] %in% lnames ) { stop("Some levels were not found, please check!")
       print (". . . . . .  Getting block group data")
 
       # auxiliary procedure to get the data
+      if (county != "*") {
+
+      ldata[["block.group"]] <-  suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = county, tract = tract, block.group = block.group, combine = combine, combine.term = combine.name), variable = variables, endyear = endyear, span = span, one.zero = TRUE))
+
+      }
+      else {
 
       county.data <-  suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = "*", ), variable = variables_aux, endyear = endyear, span = span))
-      county <- as.numeric(geography(county.data)$county)
 
-      ldata[["block.group"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state, county = county, tract = tract, block.group = block.group, combine = combine, combine.term = combine.name), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ncounty <- as.numeric(geography(county.data)$county)
+
+      ldata[["block.group"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state, county = ncounty, tract = tract, block.group = block.group, combine = combine, combine.term = combine.name), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+
+      }
 
       if (length(ldata[["block.group"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")

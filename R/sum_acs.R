@@ -52,6 +52,8 @@
 #'   "wide".
 #' @param file The resulting output is exported to a CSV file rather than to the
 #'   R prompt. The file name must be specified as a character string.
+#' @param combine Whether the geographies are to be combined when the data is downloaded.
+#' @param combine.name Label for the aggregate geography when data are combined. The default value is \code{aggregate}.
 #' @return Returns a \code{data.table/data.frame} object with the estimates and
 #'   MOEs.
 #' @details When the standard error of a proportion cannot be estimated, the

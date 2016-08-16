@@ -74,6 +74,10 @@ Variables and levels must be the same as those specified in the
 
 \item{file}{The resulting output is exported to a CSV file rather than to the
 R prompt. The file name must be specified as a character string.}
+
+\item{combine}{Whether the geographies are to be combined when the data is downloaded.}
+
+\item{combine.name}{Label for the aggregate geography when data are combined. The default value is \code{aggregate}.}
 }
 \value{
 Returns a \code{data.table/data.frame} object with the estimates and
