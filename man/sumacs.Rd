@@ -15,7 +15,7 @@ sumacs(formula, varname = NULL, method = NULL, level = "state",
   state.legislative.district.lower = "*", puma = "*", zip.code = "*",
   american.indian.area = "*", school.district.elementary = "*",
   school.district.secondary = "*", school.district.unified = "*",
-  combine = FALSE, combine.name = NULL)
+  combine = FALSE, combine.name = "aggregate")
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using

@@ -88,7 +88,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
                         school.district.secondary = "*",
                         school.district.unified = "*",
                         combine = FALSE,
-                        combine.name = NULL)  {
+                        combine.name = "aggregate")  {
 
 
   ##################

@@ -63,14 +63,9 @@ acsdata <- function(formula, level = "state", endyear = 2014, span = 5,
                         school.district.secondary = "*",
                         school.district.unified = "*",
                         combine = FALSE,
-                        combine.name = NULL
+                        combine.name = "aggregate"
   ) {
 
-
-# some checks
-if ( combine == TRUE & is.null(combine.name ) ) {
-  stop("If combine == TRUE, you have to specify a combine.name")
-}
 
 lnames <- c("us","region","division","state","county","county.subdivision","place","tract","block.group","msa","csa","necta","urban.area","congressional.district","state.legislative.district.upper","state.legislative.district.lower","puma","zip.code","american.indian.area","school.district.elementary","school.district.secondary","school.district.unified")
 
