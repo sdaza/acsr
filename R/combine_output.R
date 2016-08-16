@@ -3,8 +3,7 @@
 #' @description The \code{combine.output} function uses outputs from the
 #'   \code{\link{acs}} package to compute proportions, ratios and aggregations
 #'   based on text formulas, or simply extract variables. The function
-#'   downloads the data and then estimate the formulas. If the function is used
-#'   without specifying any \code{data}, remember to define a key using the
+#'   downloads the data and then estimate the formulas. Remember to define a key using the
 #'   \code{\link{acs}} command \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using
 #'   ACS variables or just variables. + - operators can be included. / defines a
@@ -36,6 +35,7 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
+#' #' @param combine.names Labels for the aggregate geography. It should have the same length as the lowest level grouping list.
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
@@ -49,10 +49,9 @@
 #'   "wide".
 #' @param file The resulting output is exported to a CSV file rather than to the
 #'   R prompt. The file name must be specified as a character string.
-#' @param combine.names Labels for the aggregate geography. It should have the same length as the lowest level grouping list.
 #' @return Returns a \code{data.table/data.frame} object with the estimates and
 #'   MOEs.
-#' @details Combinations use the one.zero method in aggregation. When the standard error of a proportion cannot be estimated, the
+#' @details Combinations use the one.zero method for aggregation. When the standard error of a proportion cannot be estimated, the
 #'   "ratio" option is used. This adjustment is done row by row.
 #' @examples
 #' # api.key.install(key="*")
@@ -65,8 +64,7 @@
 #'               tract = 387201,
 #'               block.group = list(1:2, 2:3, 3:4),
 #'               combine.names = c("g1", "g2", "g3"))
-combine.output  <- function(formula, varname = NULL, method = NULL, level = NULL, endyear = 2014, span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, format.out = "wide", file = NULL,
-	                    combine.names = NULL,
+combine.output  <- function(formula, varname = NULL, method = NULL, level = NULL,  combine.names = NULL, endyear = 2014, span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, format.out = "wide", file = NULL,
                         us = "*",
                         region = "*",
                         division = "*",
@@ -574,16 +572,18 @@ for ( i in seq_along(combine.names) ) {
 fdata <- rbindlist(output, fill = TRUE)
 fdata <- fdata[, which (unlist(lapply(fdata, function(x) !all(is.na(x))))), with = FALSE]
 
+# rename variables
+setnames(fdata, names(fdata), gsub("_fips", "", names(fdata)))
+
 # write csv
 
   if (is.null(file)) {
-    print(". . . . . .  Done!")
     return(fdata)
   }
 
   else {
     write.csv(fdata, file = file)
-    print(". . . . . .  Data exported to a CSV file! Done!")
+    print(". . . . . .  Data exported to a CSV file!")
   }
 
 

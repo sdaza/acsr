@@ -6,8 +6,8 @@
   of error (MOEs) using custom geographic combinations.}
 \usage{
 combine.output(formula, varname = NULL, method = NULL, level = NULL,
-  endyear = 2014, span = 5, conf.level = 0.9, one.zero = TRUE,
-  trace = TRUE, format.out = "wide", file = NULL, combine.names = NULL,
+  combine.names = NULL, endyear = 2014, span = 5, conf.level = 0.9,
+  one.zero = TRUE, trace = TRUE, format.out = "wide", file = NULL,
   us = "*", region = "*", division = "*", state = "WI", county = "*",
   county.subdivision = "*", place = "*", tract = "*", block.group = "*",
   msa = "*", csa = "*", necta = "*", urban.area = "*",
@@ -48,7 +48,9 @@ not needed when getting only variables.}
   state, state.legislative.district.upper \cr 620 state,
   state.legislative.district.lower \cr 795 state, puma \cr 860 zip.code \cr
   950 state, school.district.elementary \cr 960 state,
-  school.district.secondary \cr 970 state, school.district.unified \cr}
+  school.district.secondary \cr 970 state, school.district.unified \cr
+
+#' @param combine.names Labels for the aggregate geography. It should have the same length as the lowest level grouping list.}
 
 \item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}
@@ -69,8 +71,6 @@ the data in the survey.}
 
 \item{file}{The resulting output is exported to a CSV file rather than to the
 R prompt. The file name must be specified as a character string.}
-
-\item{combine.names}{Labels for the aggregate geography. It should have the same length as the lowest level grouping list.}
 }
 \value{
 Returns a \code{data.table/data.frame} object with the estimates and
@@ -80,12 +80,11 @@ Returns a \code{data.table/data.frame} object with the estimates and
 The \code{combine.output} function uses outputs from the
   \code{\link{acs}} package to compute proportions, ratios and aggregations
   based on text formulas, or simply extract variables. The function
-  downloads the data and then estimate the formulas. If the function is used
-  without specifying any \code{data}, remember to define a key using the
+  downloads the data and then estimate the formulas. Remember to define a key using the
   \code{\link{acs}} command \code{api.key.install(key="*")}.
 }
 \details{
-Combinations use the one.zero method in aggregation. When the standard error of a proportion cannot be estimated, the
+Combinations use the one.zero method for aggregation. When the standard error of a proportion cannot be estimated, the
   "ratio" option is used. This adjustment is done row by row.
 }
 \examples{
