@@ -66,7 +66,7 @@
 #' @examples
 #' # api.key.install(key="*")
 #' sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)", varname = "langspan0913", method = "prop")
-sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = "2014", span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide", file = NULL,
+sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = 2014, span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide", file = NULL,
                         us = "*",
                         region = "*",
                         division = "*",
@@ -624,7 +624,7 @@ output <- list()
           }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = sprintf("%02d", as.numeric(geo$state)),
+          geoid = if (combine == FALSE) {sprintf("%02d", as.numeric(geo$state))} else {  as.character(NA) } ,
           sumlevel = "040",
           st_fips = geo$state,
           var_name = varname[v],
@@ -646,9 +646,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county))) } else { as.character(NA) },
           sumlevel = "050",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           cnty_fips = geo$county,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -670,10 +670,10 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%05d", as.numeric(geo$countysubdivision))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%05d", as.numeric(geo$countysubdivision))) } else { as.character(NA) },
           sumlevel = "060",
-          st_fips = geo$state,
-          cnty_fips = geo$county,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
+          cnty_fips = if ( combine == FALSE ) { geo$county } else { as.character(NA) },
           cnty_sub_fips = geo$countysubdivision,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -681,6 +681,7 @@ output <- list()
         )
       }
 
+if ( combine == FALSE ) {  }
 
       if (level[l] == "tract") {
 
@@ -695,10 +696,10 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract))),
+          geoid = if (combine == FALSE) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract))) } else { as.character(NA) },
           sumlevel = "140",
-          st_fips = geo$state,
-          cnty_fips = geo$county,
+          st_fips = if ( combine == FALSE ) { geo$state } else  { as.character(NA) },
+          cnty_fips = if ( combine == FALSE ) { geo$county } else { as.character(NA) },
           tract_fips = geo$tract,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -719,11 +720,11 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(geo$state, sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract)), as.numeric(geo$blockgroup)),
+          geoid = if (combine == FALSE ) { paste0(geo$state, sprintf("%03d", as.numeric(geo$county)), sprintf("%06d", as.numeric(geo$tract)), as.numeric(geo$blockgroup))} else { as.character(NA) },
           sumlevel = "150",
-          st_fips = geo$state,
-          cnty_fips = geo$county,
-          tract_fips = geo$tract,
+          st_fips = if (combine == FALSE )  { geo$state } else { NA },
+          cnty_fips = if (combine == FALSE ) { geo$county } else { NA },
+          tract_fips =  if (combine == FALSE ) { geo$tract } else { NA },
           block_group = geo$blockgroup,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -744,9 +745,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$place))),
+          geoid = if ( combine == FALSE ) {paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$place)))} else { as.character(NA) },
           sumlevel = "160",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           place = geo$place,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -789,9 +790,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
+          geoid = if ( combine == FALSE ) {paste0(sprintf("%02d", as.numeric(geo$state)))} else  { as.character(NA) },
           sumlevel = "795",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           puma = geo$publicusemicrodataarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -813,9 +814,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)))} else { as.character(NA) },
           sumlevel = "320",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state} else { as.character(NA) },
           msa = geo$metropolitanstatisticalareamicropolitanstatisticalarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -836,9 +837,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state))),
+          geoid = if ( combine == FALSE ) {paste0(sprintf("%02d", as.numeric(geo$state)))} else { as.character(NA) },
           sumlevel = "340",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) {geo$state} else { as.character(NA) },
           csa = geo$combinedstatisticalarea,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -904,9 +905,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%02d", as.numeric(geo$congressionaldistrict))),
+          geoid = if ( combine == FALSE ) {paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%02d", as.numeric(geo$congressionaldistrict)))} else { as.character(NA) },
           sumlevel = "500",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           cong_dist = geo$congressionaldistrict,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -928,9 +929,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictupper))),
+          geoid = if ( combine == FALSE ) {  paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictupper)))} else { as.character(NA) },
           sumlevel = "610",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           leg_dist_upper = geo$statelegislativedistrictupper,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -951,9 +952,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictlower))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%03d", as.numeric(geo$statelegislativedistrictlower))) } else { as.character(NA) },
           sumlevel = "620",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state} else { as.character(NA) },
           leg_dist_lower = geo$statelegislativedistrictlower,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -997,9 +998,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictelementary))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictelementary))) } else { as.character(NA) },
           sumlevel = "950",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           sch_dist_ele = geo$schooldistrictelementary,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -1020,9 +1021,9 @@ output <- list()
               }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictsecondary))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictsecondary)))} else { as.character(NA) },
           sumlevel = "960",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           sch_dist_sec = geo$schooldistrictsecondary,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},
@@ -1043,9 +1044,9 @@ output <- list()
               }
 
          vdata[[ paste0(v,l) ]] <- data.table(
-          geoid = paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictunified))),
+          geoid = if ( combine == FALSE ) { paste0(sprintf("%02d", as.numeric(geo$state)), sprintf("%05d", as.numeric(geo$schooldistrictunified)))} else { as.character(NA) },
           sumlevel = "970",
-          st_fips = geo$state,
+          st_fips = if ( combine == FALSE ) { geo$state } else { as.character(NA) },
           sch_dist_uni = geo$schooldistrictunified,
           var_name = varname[v],
           est = if (multiply == TRUE) { as.vector(p * 100)} else { as.vector(p)},

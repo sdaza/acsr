@@ -3,4 +3,5 @@
 #' @export acsdata
 #' @export sumacs
 #' @export getvars
+#' @export combine.output
 NULL
