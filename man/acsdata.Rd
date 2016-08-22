@@ -34,7 +34,9 @@ ACS variables. + - operators can be included. / defines a division.}
   state, state.legislative.district.upper \cr 620 state,
   state.legislative.district.lower \cr 795 state, puma \cr 860 zip.code \cr
   950 state, school.district.elementary \cr 960 state,
-  school.district.secondary \cr 970 state, school.district.unified \cr}
+  school.district.secondary \cr 970 state, school.district.unified \cr
+
+When \code{combine == TRUE}, the geographic information should be in a list.}
 
 \item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}
@@ -42,9 +44,11 @@ the data in the survey.}
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3,or 5), defaults to 5.}
 
-\item{combine}{Whether the geographies are to be combined when the data is downloaded.}
+\item{combine}{Whether the geographies are to be combined. If \code{combine == TRUE},
+lists should be used when specifying geographic levels.}
 
-\item{combine.name}{Label for the aggregate geography when data are combined. The default value is \code{aggregate}.}
+\item{combine.name}{Labels for the aggregate geography when combining levels.
+The default value is \code{aggregate}.}
 }
 \value{
 Returns a list of ACS objects for different levels to be used with
@@ -65,7 +69,17 @@ Depending on the quality of the internet connection, number of
 }
 \examples{
 api.key.install(key="*")
+# get variables from formula
 acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)", level = "county")
+
+# get variables directly
 acsdata(c("b16004_004", "b16004_026"), level = "county")
+
+# combine levels
+acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
+  level = c("block.group"), state = list("WI"),
+  county = list(1, 141),
+  tract = list(950100, 11700),
+  block.group = list(1:2, 1:2), combine = TRUE)
 }
 
