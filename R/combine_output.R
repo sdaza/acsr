@@ -20,7 +20,11 @@
 #'   level of the data. It may be necessary to specificy values to the
 #'   corresponding levels. For instance, when \code{level = list("county")}, you have
 #'   to specify a state (e.g., \code{state = list("WI")}, the default state in this
-#'   package), and the counties you want to combine: \code{county = list(1,2)}. The number of elements of the level list should be the same as \code{combine.names} (names of combined groups, see below).
+#'   package), and the counties you want to combine: \code{county = list(1,2)}. They may
+#'   be also nested lists (e.g., \code{county = list( list(1:2, 3:4), list(5:6, 7:8))}).
+#'   The number of elements of the level list should be the same as \code{combine.names}
+#'   (names of combined groups, see below).
+#'
 #'   The required combinations of different summary levels are:
 #'
 #'   \cr 010 us \cr 020 region \cr 030 division \cr 040 state \cr 050 state,
@@ -32,7 +36,10 @@
 #'   state.legislative.district.lower \cr 795 state, puma \cr 860 zip.code \cr
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
-#' @param combine.name Labels for the aggregate geography when data are combined.
+#'
+#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE},
+#' lists should be used when specifying geographic levels.
+#' @param combine.names Labels for the aggregate geographies. .
 #' It should be the same as the number of elements of the list \code{level}.
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.
