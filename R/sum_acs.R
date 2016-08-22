@@ -36,6 +36,11 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
+#' When \code{combine == TRUE}, the geographic information should be in a list.
+#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE},
+#' lists should be used when specifying geographic levels.
+#' @param combine.name Labels for the aggregate geography when combining levels.
+#' The default value is \code{aggregate}.
 #' @param endyear An integer (defaults to 2014  ) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
@@ -52,8 +57,6 @@
 #'   "wide".
 #' @param file The resulting output is exported to a CSV file rather than to the
 #'   R prompt. The file name must be specified as a character string.
-#' @param combine Whether the geographies are to be combined when the data is downloaded. This will be applied to all the levels specified.
-#' @param combine.name Label for the aggregate geography when data are combined. The default value is \code{aggregate}. This will be applied to all the levels specified.
 #' @return Returns a \code{data.table/data.frame} object with the estimates and
 #'   MOEs.
 #' @details When the standard error of a proportion cannot be estimated, the
@@ -65,7 +68,21 @@
 #'   \code{\link{acsdata}} first, and then to use \code{sumacs}.
 #' @examples
 #' # api.key.install(key="*")
-#' sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)", varname = "langspan0913", method = "prop")
+#'
+#' # without combining
+#' sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
+#'  varname = "langspan0913", method = "prop")
+#'
+#' # combine
+#' sumacs("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
+#'  varname = "test",
+#'  method = "prop",
+#'  level = c("block.group"),
+#'  state = list("WI"),
+#'  county = list(1, 141),
+#'  tract = list(950100, 11700),
+#'  block.group = list(1:2, 1:2),
+#'  combine = TRUE)
 sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = 2014, span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide", file = NULL,
                         us = "*",
                         region = "*",

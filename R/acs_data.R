@@ -24,12 +24,15 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
+#' When \code{combine == TRUE}, the geographic information should be in a list.
+#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE},
+#' lists should be used when specifying geographic levels.
+#' @param combine.name Labels for the aggregate geography when combining levels.
+#' The default value is \code{aggregate}.
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3,or 5), defaults to 5.
-#' @param combine Whether the geographies are to be combined when the data is downloaded.
-#' @param combine.name Label for the aggregate geography when data are combined. The default value is \code{aggregate}.
 #' @return Returns a list of ACS objects for different levels to be used with
 #'   the \code{\link{sumacs}} function.
 #' @note Depending on the quality of the internet connection, number of
@@ -38,8 +41,18 @@
 #'   than 30 minutes).
 #' @examples
 #' api.key.install(key="*")
+#' # get variables from formula
 #' acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)", level = "county")
+#'
+#' # get variables directly
 #' acsdata(c("b16004_004", "b16004_026"), level = "county")
+#'
+#' # combine levels
+#' acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
+#'   level = c("block.group"), state = list("WI"),
+#'   county = list(1, 141),
+#'   tract = list(950100, 11700),
+#'   block.group = list(1:2, 1:2), combine = TRUE)
 acsdata <- function(formula, level = "state", endyear = 2014, span = 5,
                         us = "*",
                         region = "*",
@@ -202,7 +215,7 @@ for (i in seq_along(level)) {
       }
       else {
 
-      county.data <-  suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = "*", ), variable = variables_aux, endyear = endyear, span = span))
+      county.data <- suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = "*", ), variable = variables_aux, endyear = endyear, span = span))
 
       ncounty <- as.numeric(geography(county.data)$county)
 
