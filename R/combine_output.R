@@ -20,7 +20,7 @@
 #'   level of the data. It may be necessary to specificy values to the
 #'   corresponding levels. For instance, when \code{level = list("county")}, you have
 #'   to specify a state (e.g., \code{state = list("WI")}, the default state in this
-#'   package), and the counties you want to combine: \code{county = list(. The number of elements of the level list should be the same as \code{combine.names} (names of combined groups, see below).
+#'   package), and the counties you want to combine: \code{county = list(1,2)}. The number of elements of the level list should be the same as \code{combine.names} (names of combined groups, see below).
 #'   The required combinations of different summary levels are:
 #'
 #'   \cr 010 us \cr 020 region \cr 030 division \cr 040 state \cr 050 state,
@@ -61,7 +61,12 @@
 #'   \code{\link{acsdata}} first, and then to use \code{sumacs}.
 #' @examples
 #' # api.key.install(key="*")
-#'  combine.output("(b16004_004 + b16004_026 + b16004_048 / b16004_001)", varname = "test", method = "prop", level = list("division", "division"), division = list(list(1:2, 3), list(1:2, 3:4)), combine.names = c("g1", "g2"))
+#'   combine.output("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
+#'     varname = "myvar",
+#'     method = "prop",
+#'     level = list("division", "division"),
+#'     division = list(list(1:2, 3), list(1:2, 3:4)),
+#'     combine.names = c("g1", "g2"))
 combine.output <- function(formula = formula, varname = varname, method = method, level = level, combine.names, endyear = 2014, span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, format.out = "wide", file = NULL,
     region = "*",
     division = "*",
