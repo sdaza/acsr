@@ -37,8 +37,6 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
-#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE},
-#' lists should be used when specifying geographic levels.
 #' @param combine.names Labels for the aggregate geographies. .
 #' It should be the same as the number of elements of the list \code{level}.
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
