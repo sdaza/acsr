@@ -3,5 +3,6 @@
 #' @export acsdata
 #' @export sumacs
 #' @export getvars
+#' @export combine.make.geo
 #' @export combine.output
 NULL

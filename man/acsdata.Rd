@@ -42,9 +42,9 @@ the data in the survey.}
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3,or 5), defaults to 5.}
 
-\item{combine}{Whether the geographies are to be combined when the data is downloaded. This will be applied to all the levels specified.}
+\item{combine}{Whether the geographies are to be combined when the data is downloaded.}
 
-\item{combine.name}{Label for the aggregate geography when data are combined. The default value is \code{aggregate}. This will be applied to all the levels specified.}
+\item{combine.name}{Label for the aggregate geography when data are combined. The default value is \code{aggregate}.}
 }
 \value{
 Returns a list of ACS objects for different levels to be used with
