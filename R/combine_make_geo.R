@@ -93,122 +93,146 @@ combine.make.geo <- function(
 
   # setting level variables
 
-  if ( any(level %in% "region") & length(level) == 1 &  length(region) > 1 ) {
+  if ( any(level %in% "region") ) {
   if (!is.list(region)) { stop("region has to be a list when combining data!") }
+  if (length(level) == 1 &  length(region) > 1 ) {
   level <- rep(level, length(region))
-  }
+  }}
 
-  if ( any(level %in% "division") & length(level) == 1 &  length(division) > 1 ) {
+  if ( any(level %in% "division")) {
   if (!is.list(division)) { stop("division has to be a list when combining data!") }
+  if ( length(level) == 1 &  length(division) > 1 ) {
   level <- rep(level, length(division))
-  }
+  }}
 
-  if ( any(level %in% "necta") & length(level) == 1 &  length(necta) > 1 ) {
+
+  if ( any(level %in% "necta")) {
   if (!is.list(necta)) { stop("necta has to be a list when combining data!") }
+  if ( length(level) == 1 &  length(necta) > 1 ) {
   level <- rep(level, length(necta))
-  }
+  }}
 
-  if ( any(level %in% "urban.area") & length(level) == 1 &  length(urban.area) > 1 ) {
+  if ( any(level %in% "urban.area") ) {
   if (!is.list(urban.area)) { stop("urban.area has to be a list when combining data!") }
+  if ( length(level) == 1 &  length(urban.area) > 1 ) {
   level <- rep(level, length(urban.area))
-  }
+  }}
 
-  if ( any(level %in% "zip.code") & length(level) == 1 &  length(zip.code) > 1 ) {
+  if ( any(level %in% "zip.code") ) {
   if (!is.list(zip.code)) { stop("zip.code has to be a list when combining data!") }
+  if (length(level) == 1 &  length(zip.code) > 1 ) {
   level <- rep(level, length(zip.code))
-  }
+  }}
 
-  if ( any(level %in% "american.indian.area") & length(level) == 1 &  length(american.indian.area) > 1 ) {
+  if ( any(level %in% "american.indian.area") ) {
   if (!is.list(american.indian.area)) { stop("american.indian.area has to be a list when combining data!") }
+  if (length(level) == 1 &  length(american.indian.area) > 1 ) {
   level <- rep(level, length(american.indian.area))
-  }
+  }}
 
-  if ( any(level %in% "state") & length(level) == 1 &  length(state) > 1 ) {
+  if ( any(level %in% "state") ) {
   if (!is.list(state)) { stop("state has to be a list when combining data!") }
+  if ( length(level) == 1 &  length(state) > 1 ) {
   level <- rep(level, length(state))
-  }
+  }}
 
-  if ( any(level %in% "county") & length(level) == 1 & length(state) == 1 &  length(county) > 1 ) {
+  if ( any(level %in% "county") ) {
   if (!is.list(county)) { stop("county has to be a list when combining data!") }
+  if (length(level) == 1 & length(state) == 1 &  length(county) > 1 ) {
   level <- rep(level, length(county))
   state <- rep(state, length(county))
-  }
+  }}
 
-  if ( any(level %in% "county.subdivision") & length(level) == 1 &  length(county.subdivision) > 1 ) {
+  if ( any(level %in% "county.subdivision") ) {
   if (!is.list(county.subdivision)) { stop("county.subdivision has to be a list when combining data!") }
+
+  if (length(level) == 1 &  length(county.subdivision) > 1 ) {
   level <- rep(level, length(county.subdivision))
   if ( length(state) == 1 ) { state <- rep(state, length(county.subdivision)) }
   if ( length(county) == 1 ) { county <- rep(state, length(county.subdivision)) }
-  }
+  }}
 
-  if ( any(level %in% "tract") & length(level) == 1 &  length(tract) > 1 ) {
+  if ( any(level %in% "tract") ) {
   if (!is.list(tract)) { stop("tract has to be a list when combining data!") }
+
+  if (length(level) == 1 &  length(tract) > 1 ) {
   level <- rep(level, length(tract))
   if ( length(state) == 1 ) { state <- rep(state, length(tract)) }
   if ( length(county) == 1 ) { county <- rep(state, length(tract)) }
-  }
+  }}
 
-  if ( any(level %in% "block.group") & length(level) == 1 & length(block.group) > 1 ) {
+  if ( any(level %in% "block.group") ) {
   if (!is.list(block.group)) { stop("block.group has to be a list when combining data!") }
+
+  if (  length(level) == 1 & length(block.group) > 1 ) {
   level <- rep(level, length(block.group))
   if ( length(state) == 1 ) { state <- rep(state, length(county)) }
   if ( length(county) == 1 ) { county <- rep(county, length(county)) }
   if ( length(tract) == 1 ) { tract <- rep(tract, length(county)) }
-  }
+  }}
 
-  if ( any(level %in% "place") & length(level) == 1 & length(state) == 1 &  length(place) > 1 ) {
+  if ( any(level %in% "place") ) {
   if (!is.list(place)) { stop("place has to be a list when combining data!") }
+  if (length(level) == 1 & length(state) == 1 &  length(place) > 1 ) {
   level <- rep(level, length(place))
   state <- rep(state, length(place))
-  }
+  }}
 
-  if ( any(level %in% "msa") & length(level) == 1 & length(state) == 1 &  length(msa) > 1 ) {
+  if ( any(level %in% "msa") ) {
   if (!is.list(msa)) { stop("msa has to be a list when combining data!") }
+  if ( length(level) == 1 & length(state) == 1 &  length(msa) > 1 ) {
   level <- rep(level, length(msa))
   state <- rep(state, length(msa))
-  }
+  }}
 
-  if ( any(level %in% "csa") & length(level) == 1 & length(state) == 1 &  length(csa) > 1 ) {
+  if ( any(level %in% "csa") ) {
   if (!is.list(csa)) { stop("csa has to be a list when combining data!") }
+  if  (length(level) == 1 & length(state) == 1 &  length(csa) > 1 ) {
   level <- rep(level, length(csa))
   state <- rep(state, length(csa))
-  }
+  }}
 
-  if ( any(level %in% "puma") & length(level) == 1 & length(state) == 1 &  length(puma) > 1 ) {
+  if ( any(level %in% "puma") ) {
   if (!is.list(puma)) { stop("puma has to be a list when combining data!") }
+  if (length(level) == 1 & length(state) == 1 &  length(puma) > 1 ) {
   level <- rep(level, length(puma))
   state <- rep(state, length(puma))
-  }
+  }}
 
-  if ( any(level %in% "congressional.district") & length(level) == 1 & length(state) == 1 &  length(congressional.district) > 1 ) {
+  if ( any(level %in% "congressional.district") ) {
   if (!is.list(congressional.district)) { stop("congressional.district has to be a list when combining data!") }
+  if ( length(level) == 1 & length(state) == 1 &  length(congressional.district) > 1 ) {
   level <- rep(level, length(congressional.district))
   state <- rep(state, length(congressional.district))
-  }
+  }}
 
-  if ( any(level %in% "state.legislative.district.lower") & length(level) == 1 & length(state) == 1 &  length(state.legislative.district.lower) > 1 ) {
+  if ( any(level %in% "state.legislative.district.lower") ) {
   if (!is.list(state.legislative.district.lower)) { stop("state.legislative.district.lower has to be a list when combining data!") }
+  if ( length(level) == 1 & length(state) == 1 &  length(state.legislative.district.lower) > 1 ) {
   level <- rep(level, length(state.legislative.district.lower))
   state <- rep(state, length(state.legislative.district.lower))
-  }
+  }}
 
-  if ( any(level %in% "state.legislative.district.upper") & length(level) == 1 & length(state) == 1 &  length(state.legislative.district.upper) > 1 ) {
+  if ( any(level %in% "state.legislative.district.upper") ) {
   if (!is.list(state.legislative.district.upper)) { stop("state.legislative.district.upper has to be a list when combining data!") }
+   if ( length(level) == 1 & length(state) == 1 &  length(state.legislative.district.upper) > 1 ) {
   level <- rep(level, length(state.legislative.district.upper))
   state <- rep(state, length(state.legislative.district.upper))
-  }
+  }}
 
-  if ( any(level %in% "school.district.elementary") & length(level) == 1 & length(state) == 1 &  length(school.district.elementary) > 1 ) {
-    if (!is.list(school.district.elementary)) { stop("school.district.elementary has to be a list when combining data!") }
+  if ( any(level %in% "school.district.elementary") ) {
+  if (!is.list(school.district.elementary)) { stop("school.district.elementary has to be a list when combining data!") }
+  if ( length(level) == 1 & length(state) == 1 &  length(school.district.elementary) > 1 ) {
   level <- rep(level, length(school.district.elementary))
   state <- rep(state, length(school.district.elementary))
-  }
+  }}
 
-  if ( any(level %in% "school.district.secondary") & length(level) == 1 & length(state) == 1 &  length(school.district.secondary) > 1 ) {
+  if ( any(level %in% "school.district.secondary") ) {
     if (!is.list(school.district.secondary)) { stop("school.district.secondary has to be a list when combining data!") }
+  if ( length(level) == 1 & length(state) == 1 &  length(school.district.secondary) > 1 ) {
   level <- rep(level, length(school.district.secondary))
   state <- rep(state, length(school.district.secondary))
-  }
+  }}
 
 # end setting level variables
 
@@ -239,7 +263,7 @@ combine.make.geo <- function(
 
     if (level[l] == "state" ) {
 
-       geolist[[l]] <- geo.make(state = state[[l]], check = TRUE)
+       geolist[[l]] <- geo.make(state = state[[l]])
 
        }
 
@@ -271,7 +295,7 @@ combine.make.geo <- function(
 
     if (level[l] == "block.group" ) {
 
-       geolist[[l]] <- geo.make(state = state[[l]], county = county[[l]], tract = tract[[l]], block.group = block.group[[l]], check = TRUE )
+       geolist[[l]] <- geo.make(state = state[[l]], county = county[[l]], tract = tract[[l]], block.group = block.group[[l]])
 
        }
 
@@ -375,7 +399,7 @@ combine.make.geo <- function(
 
     if (level[l] == "school.district.secondary" ) {
 
-       geolist[[l]] <- geo.make(state = state[[l]], school.district.secondary = school.district.secondary[[l]], check = TRUE)
+       geolist[[l]] <- geo.make(state = state[[l]], school.district.secondary = school.district.secondary[[l]])
 
        }
 
@@ -385,6 +409,9 @@ combine.make.geo <- function(
  tt <- Reduce("+", geolist)
  acs::combine(tt) <- TRUE
  acs::combine.term(tt) <- combine.name
+ print(". . . . . .  Printing geographic levels")
+ print(tt@geo.list)
+ print(". . . . . .  .  .  .  .  .  .  .  .  .  .")
 
   return(tt)
 
