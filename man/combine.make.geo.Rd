@@ -2,7 +2,7 @@
 % Please edit documentation in R/combine_make_geo.R
 \name{combine.make.geo}
 \alias{combine.make.geo}
-\title{Combine geographic set using the ACS package geo.make function}
+\title{Combine geographic sets using the ACS geo.make function}
 \usage{
 combine.make.geo(level, combine.name = "aggregate", print.levels = TRUE,
   region = "*", division = "*", state = "*", county = "*",

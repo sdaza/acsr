@@ -34,9 +34,7 @@ ACS variables. + - operators can be included. / defines a division.}
   state, state.legislative.district.upper \cr 620 state,
   state.legislative.district.lower \cr 795 state, puma \cr 860 zip.code \cr
   950 state, school.district.elementary \cr 960 state,
-  school.district.secondary \cr 970 state, school.district.unified \cr
-
-When \code{combine == TRUE}, the geographic information should be in a list.}
+  school.district.secondary \cr 970 state, school.district.unified \cr}
 
 \item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}
@@ -44,7 +42,7 @@ the data in the survey.}
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3,or 5), defaults to 5.}
 
-\item{combine}{Whether the geographies are to be combined. If \code{combine == TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.}
+\item{combine}{Whether the geographies are to be combined. If \code{combine =  TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.}
 
 \item{combine.name}{Label for the aggregate geography when combining levels.
 The default value is \code{aggregate}.}

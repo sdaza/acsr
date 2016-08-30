@@ -1,4 +1,4 @@
-#' @title Combine geographic set using the ACS package geo.make function
+#' @title Combine geographic sets using the ACS geo.make function
 #' @description Combine geographic objects created by the ACS package. Auxiliary function to combine geographic levels.
 #' @param level A character or vector of characters specifying the geographic
 #'   level of the data. It may be necessary to specificy values to the

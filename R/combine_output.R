@@ -2,7 +2,7 @@
 #'   of error (MOEs) of custom combinations of geographic units.
 #' @description Using the \code{sumacs} function, it  computes proportions, ratios and aggregations based on text formulas, or simply extract variables of combinations of geographic units.
 #'   It uses the same procedures of the \code{sumacs} function, but the geographic level and
-#'   information have to be specified in lists (they could also can be nested).
+#'   information have to be specified in lists (they can be nested).
 #' @param formula A character or vector of characters containing formulas using
 #'   ACS variables or just variables. + - operators can be included. / defines a
 #'   division. When the formula contains "* 100", the final statistic and MOE is
