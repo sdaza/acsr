@@ -76,7 +76,7 @@ Variables and levels must be the same as those specified in the
 
 \item{file}{The resulting output is exported to a CSV file rather than to the R prompt. The file name must be specified as a character string.}
 
-\item{combine}{Whether the geographies are to be combined. If \code{combine == TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.}
+\item{combine}{Whether the geographies are to be combined. If \code{combine = TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.}
 
 \item{combine.name}{Label for the aggregate geography when combining levels. The default value is \code{aggregate}.}
 }
