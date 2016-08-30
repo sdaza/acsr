@@ -37,10 +37,8 @@
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
 #' When \code{combine == TRUE}, the geographic information should be in a list.
-#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE},
-#' lists should be used when specifying geographic levels.
-#' @param combine.name Labels for the aggregate geography when combining levels.
-#' The default value is \code{aggregate}.
+#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.
+#' @param combine.name Label for the aggregate geography when combining levels. The default value is \code{aggregate}.
 #' @param endyear An integer (defaults to 2014  ) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
@@ -55,16 +53,14 @@
 #'   \code{sumacs} function.
 #' @param format.out Format of the output: "wide" or "long". The default is
 #'   "wide".
-#' @param file The resulting output is exported to a CSV file rather than to the
-#'   R prompt. The file name must be specified as a character string.
+#' @param file The resulting output is exported to a CSV file rather than to the R prompt. The file name must be specified as a character string.
 #' @return Returns a \code{data.table/data.frame} object with the estimates and
 #'   MOEs.
 #' @details When the standard error of a proportion cannot be estimated, the
 #'   "ratio" option is used. This adjustment is done row by row.
 #' @note Depending on the quality of the internet connection, number of
 #'   variables and levels, getting the ACS data can be slow, especially for the
-#'   levels "county.subdivision", "block.group", and "tract" (it might take more
-#'   than 30 minutes).  It is recommended to get the data using the function
+#'   levels "county.subdivision", "block.group", and "tract" (it might take more than 30 minutes).  It is recommended to get the data using the function
 #'   \code{\link{acsdata}} first, and then to use \code{sumacs}.
 #' @examples
 #' # api.key.install(key="*")
@@ -73,7 +69,7 @@
 #' sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
 #'  varname = "langspan0913", method = "prop")
 #'
-#' # combine
+#' # combining
 #' sumacs("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
 #'  varname = "test",
 #'  method = "prop",
@@ -282,7 +278,7 @@ output <- list()
 
     # nested level loop
 
-    if ( combine == FALSE ) { ss <- seq_along(level) } else { ss <- 1 }
+    if ( combine == FALSE ) { ss <- seq_along(level) } else { ss <- 1 } # only one level
 
     for (l in  ss ) {
 

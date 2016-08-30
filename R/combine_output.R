@@ -1,9 +1,8 @@
 #' @title Estimate proportions, ratios, aggregations and the respective margins
 #'   of error (MOEs) of custom combinations of geographic units.
-#' @description Using the \code{sumacs} function, it  computes proportions, ratios and aggregations
-#'   based on text formulas, or simply extract variables of combinations of geographic units.
+#' @description Using the \code{sumacs} function, it  computes proportions, ratios and aggregations based on text formulas, or simply extract variables of combinations of geographic units.
 #'   It uses the same procedures of the \code{sumacs} function, but the geographic level and
-#'   information have to be specified in lists. That one is the main difference with the \code{sumacs} function.
+#'   information have to be specified in lists (they could also can be nested).
 #' @param formula A character or vector of characters containing formulas using
 #'   ACS variables or just variables. + - operators can be included. / defines a
 #'   division. When the formula contains "* 100", the final statistic and MOE is
@@ -22,8 +21,7 @@
 #'   to specify a state (e.g., \code{state = list("WI")}, the default state in this
 #'   package), and the counties you want to combine: \code{county = list(1,2)}. They may
 #'   be also nested lists (e.g., \code{county = list( list(1:2, 3:4), list(5:6, 7:8))}).
-#'   The number of elements of the level list should be the same as \code{combine.names}
-#'   (names of combined groups, see below).
+#'   The number of elements of the level list should be the same as \code{combine.names)  (names of combined groups, see below).
 #'
 #'   The required combinations of different summary levels are:
 #'
@@ -37,7 +35,7 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
-#' @param combine.names Labels for the aggregate geographies. .
+#' @param combine.names Labels for the aggregate geographies.
 #' It should be the same as the number of elements of the list \code{level}.
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.

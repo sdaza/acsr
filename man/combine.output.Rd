@@ -33,28 +33,7 @@ estimate expected: "proportion", "ratio", "aggregation", "variables". This
 vector must have same length as \code{formula} and \code{varname}. It is
 not needed when getting only variables.}
 
-\item{level}{A list containing the specifying the geographic
-  level of the data. It may be necessary to specificy values to the
-  corresponding levels. For instance, when \code{level = list("county")}, you have
-  to specify a state (e.g., \code{state = list("WI")}, the default state in this
-  package), and the counties you want to combine: \code{county = list(1,2)}. They may
-  be also nested lists (e.g., \code{county = list( list(1:2, 3:4), list(5:6, 7:8))}).
-  The number of elements of the level list should be the same as \code{combine.names}
-  (names of combined groups, see below).
-
-  The required combinations of different summary levels are:
-
-  \cr 010 us \cr 020 region \cr 030 division \cr 040 state \cr 050 state,
-  county \cr 060 state, county, county.subdivision \cr 140 state, county,
-  tract \cr 150 state, county, tract, block.group \cr 160 state, place \cr
-  250 american.indian.area \cr 320 state, msa \cr 340 state, csa \cr 350
-  necta \cr 400 urban.area \cr 500 state, congressional.district \cr 610
-  state, state.legislative.district.upper \cr 620 state,
-  state.legislative.district.lower \cr 795 state, puma \cr 860 zip.code \cr
-  950 state, school.district.elementary \cr 960 state,
-  school.district.secondary \cr 970 state, school.district.unified \cr}
-
-\item{combine.names}{Labels for the aggregate geographies. .
+\item{combine.names}{Labels for the aggregate geographies.
 It should be the same as the number of elements of the list \code{level}.}
 
 \item{endyear}{An integer (defaults to 2014) indicating the latest year of
@@ -86,10 +65,9 @@ Returns a \code{data.table/data.frame} object with the estimates and
   MOEs.
 }
 \description{
-Using the \code{sumacs} function, it  computes proportions, ratios and aggregations
-  based on text formulas, or simply extract variables of combinations of geographic units.
+Using the \code{sumacs} function, it  computes proportions, ratios and aggregations based on text formulas, or simply extract variables of combinations of geographic units.
   It uses the same procedures of the \code{sumacs} function, but the geographic level and
-  information have to be specified in lists. That one is the main difference with the \code{sumacs} function.
+  information have to be specified in lists (they could also can be nested).
 }
 \details{
 When the standard error of a proportion cannot be estimated, the

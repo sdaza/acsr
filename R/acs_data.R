@@ -1,7 +1,6 @@
 #' @title Create a list containing ACS data files (\code{\link{acs}}).
 #' @description Because downloading the data to compute a proportion, ratio or
-#'   aggregation can be slow, the \code{acsdata} function creates an object that
-#'   can be used with the \code{\link{sumacs}} function. Before using this
+#'   aggregation can be slow, the \code{acsdata} function creates an object that  can be used with the \code{\link{sumacs}} function. Before using this
 #'   function remember to define a key using the \code{\link{acs}} command
 #'   \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using
@@ -25,9 +24,8 @@
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
 #' When \code{combine == TRUE}, the geographic information should be in a list.
-#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE},
-#' lists should be used when specifying geographic levels.
-#' @param combine.name Labels for the aggregate geography when combining levels.
+#' @param combine Whether the geographies are to be combined. If \code{combine == TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.
+#' @param combine.name Label for the aggregate geography when combining levels.
 #' The default value is \code{aggregate}.
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.

@@ -74,14 +74,11 @@ Variables and levels must be the same as those specified in the
 \item{format.out}{Format of the output: "wide" or "long". The default is
 "wide".}
 
-\item{file}{The resulting output is exported to a CSV file rather than to the
-R prompt. The file name must be specified as a character string.}
+\item{file}{The resulting output is exported to a CSV file rather than to the R prompt. The file name must be specified as a character string.}
 
-\item{combine}{Whether the geographies are to be combined. If \code{combine == TRUE},
-lists should be used when specifying geographic levels.}
+\item{combine}{Whether the geographies are to be combined. If \code{combine == TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.}
 
-\item{combine.name}{Labels for the aggregate geography when combining levels.
-The default value is \code{aggregate}.}
+\item{combine.name}{Label for the aggregate geography when combining levels. The default value is \code{aggregate}.}
 }
 \value{
 Returns a \code{data.table/data.frame} object with the estimates and
@@ -102,8 +99,7 @@ When the standard error of a proportion cannot be estimated, the
 \note{
 Depending on the quality of the internet connection, number of
   variables and levels, getting the ACS data can be slow, especially for the
-  levels "county.subdivision", "block.group", and "tract" (it might take more
-  than 30 minutes).  It is recommended to get the data using the function
+  levels "county.subdivision", "block.group", and "tract" (it might take more than 30 minutes).  It is recommended to get the data using the function
   \code{\link{acsdata}} first, and then to use \code{sumacs}.
 }
 \examples{
@@ -113,7 +109,7 @@ Depending on the quality of the internet connection, number of
 sumacs(formula = "(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
  varname = "langspan0913", method = "prop")
 
-# combine
+# combining
 sumacs("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
  varname = "test",
  method = "prop",
