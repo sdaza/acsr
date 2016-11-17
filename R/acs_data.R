@@ -390,7 +390,6 @@ for (i in seq_along(level)) {
 
   }
 
-  print(". . . . . .  Done!")
   return(ldata)
 
 }
