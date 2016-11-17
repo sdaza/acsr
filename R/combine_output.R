@@ -15,13 +15,12 @@
 #'   estimate expected: "proportion", "ratio", "aggregation", "variables". This
 #'   vector must have same length as \code{formula} and \code{varname}. It is
 #'   not needed when getting only variables.
-#' @param level A list containing the specifying the geographic
-#'   level of the data. It may be necessary to specificy values to the
+#' @param level A list specifying the geographic level of the data. It may be necessary to specificy values to the
 #'   corresponding levels. For instance, when \code{level = list("county")}, you have
 #'   to specify a state (e.g., \code{state = list("WI")}, the default state in this
 #'   package), and the counties you want to combine: \code{county = list(1,2)}. They may
-#'   be also nested lists (e.g., \code{county = list( list(1:2, 3:4), list(5:6, 7:8))}).
-#'   The number of elements of the level list should be the same as \code{combine.names)  (names of combined groups, see below).
+#'   be also nested lists (e.g., \code{county = list( list(1:2, 3:4), list(5:6, 7:8) )}).
+#'   The number of elements of the level list should be the same as \code{combine.names)} (names of combined groups, see below).
 #'
 #'   The required combinations of different summary levels are:
 #'
@@ -112,7 +111,7 @@ combine.output <- function(formula = formula, varname = varname, method = method
 
  # region
 if (level[[i]] == "region") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
  	 region = region[[i]],
    	 combine = TRUE,
    	 combine.name = combine.names[i])
@@ -120,7 +119,7 @@ if (level[[i]] == "region") {
 
  # division
 if (level[[i]] == "division") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      division = division[[i]],
      combine = TRUE,
      combine.name = combine.names[i])
@@ -128,7 +127,7 @@ if (level[[i]] == "division") {
 
  # american.indian.area
 if (level[[i]] == "american.indian.area") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      american.indian.area = american.indian.area[[i]],
      combine = TRUE,
      combine.name = combine.names[i])
@@ -136,7 +135,7 @@ if (level[[i]] == "american.indian.area") {
 
 # necta
 if (level[[i]] == "necta") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      necta = necta[[i]],
      combine = TRUE,
      combine.name = combine.names[i])
@@ -144,7 +143,7 @@ if (level[[i]] == "necta") {
 
 # urban.area
 if (level[[i]] == "urban.area") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      urban.area = urban.area[[i]],
      combine = TRUE,
      combine.name = combine.names[i])
@@ -152,7 +151,7 @@ if (level[[i]] == "urban.area") {
 
  # state
 if (level[[i]] == "state") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      combine = TRUE,
      combine.name = combine.names[i])
@@ -160,7 +159,7 @@ if (level[[i]] == "state") {
 
  # county
 if (level[[i]] == "county") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      county = county[[i]],
      combine = TRUE,
@@ -169,7 +168,7 @@ if (level[[i]] == "county") {
 
  # county.subdivision
 if (level[[i]] == "county.subdivision") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      county = county[[i]],
      county.subdivision = county.subdivision[[i]],
@@ -179,7 +178,7 @@ if (level[[i]] == "county.subdivision") {
 
  # tract
 if (level[[i]] == "tract") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      county = county[[i]],
      tract = tract[[i]],
@@ -189,7 +188,7 @@ if (level[[i]] == "tract") {
 
  # block.group
 if (level[[i]] == "block.group") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      county = county[[i]],
      tract = tract[[i]],
@@ -200,7 +199,7 @@ if (level[[i]] == "block.group") {
 
 # place
 if (level[[i]] == "place") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      place = place[[i]],
      combine = TRUE,
@@ -209,7 +208,7 @@ if (level[[i]] == "place") {
 
 # puma
 if (level[[i]] == "puma") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      puma = puma[[i]],
      combine = TRUE,
@@ -218,7 +217,7 @@ if (level[[i]] == "puma") {
 
 # msa
 if (level[[i]] == "msa") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      msa = msa[[i]],
      combine = TRUE,
@@ -227,7 +226,7 @@ if (level[[i]] == "msa") {
 
 # csa
 if (level[[i]] == "csa") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      csa = csa[[i]],
      combine = TRUE,
@@ -236,7 +235,7 @@ if (level[[i]] == "csa") {
 
 # congressional.district
 if (level[[i]] == "congressional.district") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      congressional.district = congressional.district[[i]],
      combine = TRUE,
@@ -245,7 +244,7 @@ if (level[[i]] == "congressional.district") {
 
 # state.legislative.district.lower
 if (level[[i]] == "state.legislative.district.lower") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      state.legislative.district.lower = state.legislative.district.lower[[i]],
      combine = TRUE,
@@ -254,7 +253,7 @@ if (level[[i]] == "state.legislative.district.lower") {
 
 # state.legislative.district.upper
 if (level[[i]] == "state.legislative.district.upper") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      state.legislative.district.upper = state.legislative.district.upper[[i]],
      combine = TRUE,
@@ -263,7 +262,7 @@ if (level[[i]] == "state.legislative.district.upper") {
 
 # school.district.elementary
 if (level[[i]] == "school.district.elementary") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      school.district.elementary = school.district.elementary[[i]],
      combine = TRUE,
@@ -272,7 +271,7 @@ if (level[[i]] == "school.district.elementary") {
 
 # school.district.secondary
 if (level[[i]] == "school.district.secondary") {
- output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = TRUE,
+ output[[i]] <- acsr::sumacs(formula = formula, varname = varname, method = method, level = level[[i]], endyear = endyear, span = span, conf.level = conf.level, one.zero = one.zero, trace = trace, format.out = format.out, file = NULL, print.levels = print.levels,
      state = state[[i]],
      school.district.secondary = school.district.secondary[[i]],
      combine = TRUE,

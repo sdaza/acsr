@@ -1177,13 +1177,12 @@ else if (format.out == "wide") {
 # write csv
 
   if (is.null(file)) {
-    print(". . . . . .  Done!")
     return(fdata)
   }
 
   else {
-    write.csv(fdata, file=file)
-    print(". . . . . .  Data exported to a CSV file! Done!")
+    write.csv(fdata, file = file)
+    print(". . . . . .  Data exported to a CSV file! ")
   }
 
 } # end function
