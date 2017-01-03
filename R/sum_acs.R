@@ -649,7 +649,7 @@ output <- list()
           }
 
         vdata[[ paste0(v,l) ]]  <- data.table(
-          geoid = printf("%02d", as.numeric(geo$state)),
+          geoid = sprintf("%02d", as.numeric(geo$state)),
           sumlevel = "040",
           st_fips = geo$state,
           var_name = varname[v],
