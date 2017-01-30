@@ -11,7 +11,7 @@ Description: Wrapped functions to download, manage, and presenting data from the
 License: What license is it under?
 Depends:
     acs (>= 1.2),
-    data.table (>= 1.9.7)
+    data.table (>= 1.10.0)
 LazyData: true
 URL: http://github.com/sdaza/acsr
 RoxygenNote: 5.0.1

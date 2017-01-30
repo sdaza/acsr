@@ -6,12 +6,12 @@
   of error (MOEs) of custom combinations of geographic units.}
 \usage{
 combine.output(formula = formula, varname = varname, method = method,
-  level = level, combine.names, endyear = 2014, span = 5,
-  conf.level = 0.9, one.zero = TRUE, trace = TRUE, format.out = "wide",
-  file = NULL, print.levels = TRUE, region = "*", division = "*",
-  state = "WI", county = "*", county.subdivision = "*", place = "*",
-  tract = "*", block.group = "*", msa = "*", csa = "*", necta = "*",
-  urban.area = "*", congressional.district = "*",
+  level = level, combine.names, dataset = "acs", endyear = 2014,
+  span = 5, conf.level = 0.9, one.zero = TRUE, trace = TRUE,
+  format.out = "wide", file = NULL, print.levels = TRUE, region = "*",
+  division = "*", state = "WI", county = "*", county.subdivision = "*",
+  place = "*", tract = "*", block.group = "*", msa = "*", csa = "*",
+  necta = "*", urban.area = "*", congressional.district = "*",
   state.legislative.district.upper = "*",
   state.legislative.district.lower = "*", puma = "*", zip.code = "*",
   american.indian.area = "*", school.district.elementary = "*",
@@ -54,6 +54,9 @@ not needed when getting only variables.}
 
 \item{combine.names}{Labels for the aggregate geographies.
 It should be the same as the number of elements of the list \code{level}.}
+
+\item{dataset}{A string specifying the data set to be used: acs, sf1 or sf1.
+The default value is "acs".}
 
 \item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}

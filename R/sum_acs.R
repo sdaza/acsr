@@ -37,8 +37,16 @@
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
 #' When \code{combine == TRUE}, the geographic information should be in a list.
-#' @param combine Whether the geographies are to be combined. If \code{combine = TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.
-#' @param combine.name Label for the aggregate geography when combining levels. The default value is \code{aggregate}.
+#' @param combine Whether the geographies are to be combined. If \code{combine = TRUE},
+#' lists should be used when specifying geographic levels (the corresponding level
+#' for the level specified). If the rest geographic levels has one element,
+#' the function will assume that level is equal for all the sub-levels.
+#' For example, if \code{state = "WI"}, and several counties were specified,
+#' the function assumes that all the counties are from WI.
+#' @param combine.name Label for the aggregate geography when combining levels.
+#' The default value is \code{aggregate}.
+#' @param dataset A string specifying the data set to be used: acs, sf1 or sf1.
+#' The default value is "acs".
 #' @param endyear An integer (defaults to 2014  ) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
@@ -80,31 +88,34 @@
 #'  tract = list(950100, 11700),
 #'  block.group = list(1:2, 1:2),
 #'  combine = TRUE)
-sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", endyear = 2014, span = 5, conf.level = 0.90, one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide", file = NULL, print.levels = TRUE,
-                        us = "*",
-                        region = "*",
-                        division = "*",
-                        state = "WI",
-                        county = "*",
-                        county.subdivision ="*",
-                        place ="*",
-                        tract = "*",
-                        block.group = "*",
-                        msa = "*",
-                        csa = "*",
-                        necta = "*",
-                        urban.area = "*",
-                        congressional.district = "*",
-                        state.legislative.district.upper = "*",
-                        state.legislative.district.lower = "*",
-                        puma = "*",
-                        zip.code = "*",
-                        american.indian.area = "*",
-                        school.district.elementary = "*",
-                        school.district.secondary = "*",
-                        school.district.unified = "*",
-                        combine = FALSE,
-                        combine.name = "aggregate")  {
+sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
+                    dataset = "acs", endyear = 2014, span = 5, conf.level = 0.90,
+                    one.zero = TRUE, trace = TRUE, data = NULL,
+                    format.out = "wide", file = NULL, print.levels = TRUE,
+                    us = "*",
+                    region = "*",
+                    division = "*",
+                    state = "WI",
+                    county = "*",
+                    county.subdivision ="*",
+                    place ="*",
+                    tract = "*",
+                    block.group = "*",
+                    msa = "*",
+                    csa = "*",
+                    necta = "*",
+                    urban.area = "*",
+                    congressional.district = "*",
+                    state.legislative.district.upper = "*",
+                    state.legislative.district.lower = "*",
+                    puma = "*",
+                    zip.code = "*",
+                    american.indian.area = "*",
+                    school.district.elementary = "*",
+                    school.district.secondary = "*",
+                    school.district.unified = "*",
+                    combine = FALSE,
+                    combine.name = "aggregate")  {
 
 
   ##################
@@ -115,10 +126,6 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
  #    # stop("Some formulas do not have any operator (+, - or /)")
  #    method <- rep("variables", length(varname))
  #  }
-
-  if ((identical(length(formula), length(varname), length(method)) == 0)) {
-    stop("Vector of formulas, variable names and methods must have the same length!")
-  }
 
  if (any(!grepl("\\/", formula[tolower(method) %in% c("proportion", "prop", "ratio")])) )
 
@@ -133,6 +140,23 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state", en
   ###############################
   # definition of some variables
   ###############################
+
+  if (length(formula) > 1 & length(method) == 1) {
+    method <- rep(method, length(formula))
+  }
+
+  if (is.null(varname) & length(grep("variable", method)) == length(formula)) {
+    varname <- formula
+  }
+
+  if (is.null(varname)) {
+    varname <- paste0("var", 1:length(formula))
+    print("Specificy varname to get custom variable names!")
+  }
+
+   if ((identical(length(formula), length(method)) == 0)) {
+    stop("Vector of formulas and methods must have the same length!")
+  }
 
   conf.level <- round(qnorm( (1 + conf.level) / 2), digits = 3)
   variables <- acsr::getvars(formula)
@@ -155,7 +179,8 @@ output <- list()
 
   if ( is.null(data) ) {
 
-    ldata <- acsr::acsdata(formula = formula, level = level, endyear = endyear, span = span,
+    ldata <- acsr::acsdata(formula = formula, level = level, dataset = dataset,
+              endyear = endyear, span = span,
               us = us,
               region = region,
               division = division,
@@ -635,7 +660,6 @@ output <- list()
         )
       }
 
-
       if (level[l] == "state") {
 
         if (multiply == TRUE)
@@ -680,7 +704,6 @@ output <- list()
           moe = cmoe
         )
       }
-
 
       if (level[l] == "county.subdivision") {
 
@@ -1172,17 +1195,26 @@ else if (format.out == "wide") {
   data.table::setkey(fdata, sumlevel)
   }
 
-
-}
-# write csv
-
-  if (is.null(file)) {
-    return(fdata)
   }
 
-  else {
-    write.csv(fdata, file = file)
-    print(". . . . . .  Data exported to a CSV file! ")
+  # clean names using census data
+   if (dataset == "sf1" | dataset == "sf3") {
+    dnames <- grep("moe", names(fdata), value = TRUE)
+    fdata <- fdata[, -dnames, with = FALSE]
+    enames <- gsub("_est", "", names(fdata))
+    setnames(fdata, names(fdata), enames)
   }
+
+  # lower names of variables
+    dnames <- names(fdata)
+    setnames(fdata, dnames, tolower(dnames))
+
+  # write csv
+    if (!is.null(file)) {
+        fwrite(fdata, file = file)
+        print(". . . . . .  Data exported to a CSV file! ")
+      }
+
+  return(fdata)
 
 } # end function

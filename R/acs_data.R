@@ -1,6 +1,7 @@
 #' @title Create a list containing ACS data files (\code{\link{acs}}).
 #' @description Because downloading the data to compute a proportion, ratio or
-#'   aggregation can be slow, the \code{acsdata} function creates an object that  can be used with the \code{\link{sumacs}} function. Before using this
+#'   aggregation can be slow, the \code{acsdata} function creates an object that
+#'   can be used with the \code{\link{sumacs}} function. Before using this
 #'   function remember to define a key using the \code{\link{acs}} command
 #'   \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using
@@ -23,9 +24,16 @@
 #'   950 state, school.district.elementary \cr 960 state,
 #'   school.district.secondary \cr 970 state, school.district.unified \cr
 #'
-#' @param combine Whether the geographies are to be combined. If \code{combine =  TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.
+#' @param combine Whether the geographies are to be combined. If \code{combine = TRUE},
+#' lists should be used when specifying geographic levels (the corresponding level
+#' for the level specified). If the rest geographic levels has one element,
+#' the function will assume that level is equal for all the sub-levels.
+#' For example, if \code{state = "WI"}, and several counties were specified,
+#' the function assumes that all the counties are from WI.
 #' @param combine.name Label for the aggregate geography when combining levels.
 #' The default value is \code{aggregate}.
+#' @param dataset A string specifying the data set to be used: acs, sf1 or sf1.
+#' The default value is "acs".
 #' @param endyear An integer (defaults to 2014) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
@@ -51,7 +59,7 @@
 #'   county = list(1, 141),
 #'   tract = list(950100, 11700),
 #'   block.group = list(1:2, 1:2), combine = TRUE)
-acsdata <- function(formula, level = "state", endyear = 2014, span = 5,
+acsdata <- function(formula, level = "state", dataset = "acs", endyear = 2014, span = 5,
                         us = "*",
                         region = "*",
                         division = "*",
@@ -80,7 +88,12 @@ acsdata <- function(formula, level = "state", endyear = 2014, span = 5,
   ) {
 
 
-lnames <- c("us","region","division","state","county","county.subdivision","place","tract","block.group","msa","csa","necta","urban.area","congressional.district","state.legislative.district.upper","state.legislative.district.lower","puma","zip.code","american.indian.area","school.district.elementary","school.district.secondary","school.district.unified")
+lnames <- c("us","region","division","state","county","county.subdivision","place",
+            "tract","block.group","msa","csa","necta","urban.area",
+            "congressional.district","state.legislative.district.upper",
+            "state.legislative.district.lower","puma","zip.code",
+            "american.indian.area","school.district.elementary",
+            "school.district.secondary","school.district.unified")
 
 # short loop to levels
 for (i in seq_along(level)) {
@@ -108,7 +121,12 @@ for (i in seq_along(level)) {
 
     if (level[tlev] == "us") {
       print (". . . . . .  Getting us data")
-      ldata[["us"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(us = us), variable = variables, endyear = endyear, span = span))
+      ldata[["us"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(us = us),
+                                                       variable = variables,
+                                                       dataset = dataset,
+                                                       endyear = endyear,
+                                                       span = span,
+                                                       one.zero = TRUE))
 
       if (length(ldata[["us"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -118,7 +136,12 @@ for (i in seq_along(level)) {
 
    else if (level[tlev] == "region") {
       print (". . . . . .  Getting region data")
-      ldata[["region"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(region = region), variable = variables, endyear = endyear, span = span, one.zero = TRUE))
+      ldata[["region"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(region = region),
+                                                           variable = variables,
+                                                           dataset = dataset,
+                                                           endyear = endyear,
+                                                           span = span,
+                                                           one.zero = TRUE))
 
       if (length(ldata[["region"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -128,7 +151,12 @@ for (i in seq_along(level)) {
 
    else if (level[tlev] == "division") {
       print (". . . . . .  Getting division data")
-      ldata[["division"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(division = division), variable = variables, endyear = endyear, span = span, one.zero = TRUE))
+      ldata[["division"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(division = division),
+                                                             variable = variables,
+                                                             dataset = dataset,
+                                                             endyear = endyear,
+                                                             span = span,
+                                                             one.zero = TRUE))
 
       if (length(ldata[["division"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -139,7 +167,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "american.indian.area") {
       print (". . . . . .  Getting american indian area data")
-      ldata[["american.indian.area"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(american.indian.area = american.indian.area), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["american.indian.area"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(american.indian.area = american.indian.area),
+                                                                          variable = variables,
+                                                                          dataset = dataset,
+                                                                          endyear = endyear,
+                                                                          span = span,
+                                                                          one.zero = TRUE) )
 
       if (length(ldata[["american.indian.area"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -149,7 +182,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "state") {
       print (". . . . . .  Getting state data")
-      ldata[["state"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(state = state), variable = variables, endyear = endyear, span = span, one.zero = TRUE))
+      ldata[["state"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(state = state),
+                                                          variable = variables,
+                                                          dataset = dataset,
+                                                          endyear = endyear,
+                                                          span = span,
+                                                          one.zero = TRUE))
 
       if (length(ldata[["state"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -159,7 +197,11 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "county") {
       print (". . . . . .  Getting county data")
-      ldata[["county"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(state = state, county = county), variable = variables, endyear = endyear, span = span, one.zero = TRUE))
+      ldata[["county"]] <- suppressWarnings(acs::acs.fetch( acs::geo.make(state = state, county = county),
+                                                           variable = variables,
+                                                           dataset = dataset,
+                                                           endyear = endyear,
+                                                           span = span, one.zero = TRUE))
 
       if (length(ldata[["county"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -174,7 +216,12 @@ for (i in seq_along(level)) {
       print (". . . . . .  Getting county subdivision data")
 
 
-      ldata[["county.subdivision"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, county = county, county.subdivision = county.subdivision), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["county.subdivision"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, county = county, county.subdivision = county.subdivision),
+                                                                        variable = variables,
+                                                                        dataset = dataset,
+                                                                         endyear = endyear,
+                                                                         span = span,
+                                                                         one.zero = TRUE) )
 
       if (length(ldata[["county.subdivision"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -184,7 +231,12 @@ for (i in seq_along(level)) {
     else if (level[tlev] == "place") {
 
       print (". . . . . .  Getting place data")
-      ldata[["place"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, place = place), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["place"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, place = place),
+                                                           variable = variables,
+                                                           dataset = dataset,
+                                                           endyear = endyear,
+                                                           span = span,
+                                                           one.zero = TRUE) )
 
       if (length(ldata[["place"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -195,7 +247,12 @@ for (i in seq_along(level)) {
 
 
       print (". . . . . .  Getting tract data")
-      ldata[["tract"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, county = county, tract = tract), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["tract"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, county = county, tract = tract),
+                                                           variable = variables,
+                                                           dataset = dataset,
+                                                           endyear = endyear,
+                                                           span = span,
+                                                           one.zero = TRUE) )
 
       if (length(ldata[["tract"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -209,16 +266,30 @@ for (i in seq_along(level)) {
       # auxiliary procedure to get the data
       if (!any(county == "*")) {
 
-      ldata[["block.group"]] <-  suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = county, tract = tract, block.group = block.group), variable = variables, endyear = endyear, span = span, one.zero = TRUE))
+      ldata[["block.group"]] <-  suppressWarnings(acs::acs.fetch( acs::geo.make(state= state, county = county, tract = tract, block.group = block.group),
+                                                                  variable = variables,
+                                                                  dataset = dataset,
+                                                                  endyear = endyear,
+                                                                  span = span,
+                                                                  one.zero = TRUE))
 
       }
       else {
 
-      county.data <- suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = "*", ), variable = variables_aux, endyear = endyear, span = span))
+      county.data <- suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, county = "*", ),
+                                                      variable = variables_aux,
+                                                      dataset = dataset,
+                                                      endyear = endyear,
+                                                      span = span))
 
       ncounty <- as.numeric(geography(county.data)$county)
 
-      ldata[["block.group"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state, county = ncounty, tract = tract, block.group = block.group), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["block.group"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state, county = ncounty, tract = tract, block.group = block.group),
+                                                                  variable = variables,
+                                                                  dataset = dataset,
+                                                                  endyear = endyear,
+                                                                  span = span,
+                                                                  one.zero = TRUE) )
 
       }
 
@@ -230,7 +301,12 @@ for (i in seq_along(level)) {
     else if (level[tlev] == "msa") {
 
       print (". . . . . .  Getting msa data")
-      ldata[["msa"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state,  msa = msa), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["msa"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state,  msa = msa),
+                                                          variable = variables,
+                                                          dataset = dataset,
+                                                          endyear = endyear,
+                                                          span = span,
+                                                          one.zero = TRUE) )
 
       if (length(ldata[["msa"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -241,7 +317,12 @@ for (i in seq_along(level)) {
     else if (level[tlev] == "csa") {
 
       print (". . . . . .  Getting csa data")
-      ldata[["csa"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state,  csa = csa), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["csa"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state = state,  csa = csa),
+                                                          variable = variables,
+                                                          dataset = dataset,
+                                                          endyear = endyear,
+                                                          span = span,
+                                                          one.zero = TRUE) )
 
       if (length(ldata[["csa"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -252,7 +333,12 @@ for (i in seq_along(level)) {
     else if (level[tlev] == "necta") {
 
       print (". . . . . .  Getting necta data")
-      ldata[["necta"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(necta = necta), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["necta"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(necta = necta),
+                                                            variable = variables,
+                                                            dataset = dataset,
+                                                            endyear = endyear,
+                                                            span = span,
+                                                            one.zero = TRUE) )
 
       if (length(ldata[["necta"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -263,7 +349,12 @@ for (i in seq_along(level)) {
     else if (level[tlev] == "urban.area") {
 
       print (". . . . . .  Getting urban area data")
-      ldata[["urban.area"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(urban.area = urban.area), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["urban.area"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(urban.area = urban.area),
+                                                                 variable = variables,
+                                                                 dataset = dataset,
+                                                                 endyear = endyear,
+                                                                 span = span,
+                                                                 one.zero = TRUE) )
 
       if (length(ldata[["urban.area"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -274,7 +365,12 @@ for (i in seq_along(level)) {
     else if (level[tlev] == "congressional.district") {
       print (". . . . . .  Getting congressional district data")
 
-      ldata[["congressional.district"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, congressional.district = congressional.district), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["congressional.district"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, congressional.district = congressional.district),
+                                                                            variable = variables,
+                                                                            dataset = dataset,
+                                                                            endyear = endyear,
+                                                                            span = span,
+                                                                            one.zero = TRUE) )
 
       if (length(ldata[["congressional.district"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -284,7 +380,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "state.legislative.district.upper") {
       print (". . . . . .  Getting state legislative district upper data")
-      ldata[["state.legislative.district.upper"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state,  state.legislative.district.upper = state.legislative.district.upper), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["state.legislative.district.upper"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state,  state.legislative.district.upper = state.legislative.district.upper),
+                                                                                      variable = variables,
+                                                                                      dataset = dataset,
+                                                                                      endyear = endyear,
+                                                                                      span = span,
+                                                                                      one.zero = TRUE) )
 
       if (length(ldata[["state.legislative.district.upper"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -294,7 +395,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "state.legislative.district.lower") {
       print (". . . . . .  Getting state legislative district lower data")
-      ldata[["state.legislative.district.lower"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state,  state.legislative.district.lower = state.legislative.district.lower), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["state.legislative.district.lower"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state,  state.legislative.district.lower = state.legislative.district.lower),
+                                                                                      variable = variables,
+                                                                                      dataset = dataset,
+                                                                                      endyear = endyear,
+                                                                                      span = span,
+                                                                                      one.zero = TRUE) )
 
       if (length(ldata[["state.legislative.district.lower"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -304,7 +410,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "puma") {
       print (". . . . . .  Getting puma data")
-      ldata[["puma"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state,  puma = puma), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["puma"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state,  puma = puma),
+                                                          variable = variables,
+                                                          dataset = dataset,
+                                                          endyear = endyear,
+                                                          span = span,
+                                                          one.zero = TRUE) )
 
       if (length(ldata[["puma"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -314,7 +425,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "zip.code") {
       print (". . . . . .  Getting zip code data")
-      ldata[["zip.code"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(zip.code = zip.code), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["zip.code"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(zip.code = zip.code),
+                                                              variable = variables,
+                                                              dataset = dataset,
+                                                              endyear = endyear,
+                                                              span = span,
+                                                              one.zero = TRUE) )
 
       if (length(ldata[["zip.code"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -325,7 +441,11 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "school.district.elementary") {
       print (". . . . . .  Getting school district elementary data")
-      ldata[["school.district.elementary"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state= state, school.district.elementary = school.district.elementary), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["school.district.elementary"]] <- suppressWarnings ( acs::acs.fetch( acs::geo.make(state= state, school.district.elementary = school.district.elementary),
+                                                                                 variable = variables,
+                                                                                 dataset = dataset,
+                                                                                 endyear = endyear,
+                                                                                 span = span, one.zero = TRUE) )
 
       if (length(ldata[["school.district.elementary"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -335,7 +455,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "school.district.secondary") {
       print (". . . . . .  Getting school district secondary data")
-      ldata[["school.district.secondary"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, school.district.secondary = school.district.secondary), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["school.district.secondary"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state= state, school.district.secondary = school.district.secondary),
+                                                                               variable = variables,
+                                                                               dataset = dataset,
+                                                                               endyear = endyear,
+                                                                               span = span,
+                                                                               one.zero = TRUE) )
 
       if (length(ldata[["school.district.secondary"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -345,7 +470,12 @@ for (i in seq_along(level)) {
 
     else if (level[tlev] == "school.district.unified") {
       print (". . . . . .  Getting school district unified data")
-      ldata[["school.district.unified"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, school.district.unified = school.district.unified), variable = variables, endyear = endyear, span = span, one.zero = TRUE) )
+      ldata[["school.district.unified"]] <- suppressWarnings( acs::acs.fetch( acs::geo.make(state = state, school.district.unified = school.district.unified),
+                                                                             variable = variables,
+                                                                             dataset = dataset,
+                                                                             endyear = endyear,
+                                                                             span = span,
+                                                                             one.zero = TRUE) )
 
       if (length(ldata[["school.district.unified"]]@acs.colnames) != length(variables)) {
         stop("Not all the ACS variables were found, check variable names in your formulas!")
@@ -386,7 +516,7 @@ for (i in seq_along(level)) {
           school.district.secondary = school.district.secondary,
           school.district.unified = school.district.unified)
 
-      ldata <-  acs::acs.fetch( t.geo, variable = variables, endyear = endyear, span = span, one.zero = TRUE)
+      ldata <-  acs::acs.fetch( t.geo, variable = variables, dataset = dataset, endyear = endyear, span = span, one.zero = TRUE)
 
   }
 

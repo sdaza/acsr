@@ -4,11 +4,12 @@
 \alias{acsdata}
 \title{Create a list containing ACS data files (\code{\link{acs}}).}
 \usage{
-acsdata(formula, level = "state", endyear = 2014, span = 5, us = "*",
-  region = "*", division = "*", state = "WI", county = "*",
-  county.subdivision = "*", place = "*", tract = "*", block.group = "*",
-  msa = "*", csa = "*", necta = "*", urban.area = "*",
-  congressional.district = "*", state.legislative.district.upper = "*",
+acsdata(formula, level = "state", dataset = "acs", endyear = 2014,
+  span = 5, us = "*", region = "*", division = "*", state = "WI",
+  county = "*", county.subdivision = "*", place = "*", tract = "*",
+  block.group = "*", msa = "*", csa = "*", necta = "*",
+  urban.area = "*", congressional.district = "*",
+  state.legislative.district.upper = "*",
   state.legislative.district.lower = "*", puma = "*", zip.code = "*",
   american.indian.area = "*", school.district.elementary = "*",
   school.district.secondary = "*", school.district.unified = "*",
@@ -36,13 +37,21 @@ ACS variables. + - operators can be included. / defines a division.}
   950 state, school.district.elementary \cr 960 state,
   school.district.secondary \cr 970 state, school.district.unified \cr}
 
+\item{dataset}{A string specifying the data set to be used: acs, sf1 or sf1.
+The default value is "acs".}
+
 \item{endyear}{An integer (defaults to 2014) indicating the latest year of
 the data in the survey.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3,or 5), defaults to 5.}
 
-\item{combine}{Whether the geographies are to be combined. If \code{combine =  TRUE}, lists should be used when specifying geographic levels (the corresponding level for the level specified). If the rest geographic levels has one element, the function will assume that level is equal for all the sub-levels. For example, if \code{state = "WI"}, and several counties were specified, the function assumes that all the counties are from WI.}
+\item{combine}{Whether the geographies are to be combined. If \code{combine = TRUE},
+lists should be used when specifying geographic levels (the corresponding level
+for the level specified). If the rest geographic levels has one element,
+the function will assume that level is equal for all the sub-levels.
+For example, if \code{state = "WI"}, and several counties were specified,
+the function assumes that all the counties are from WI.}
 
 \item{combine.name}{Label for the aggregate geography when combining levels.
 The default value is \code{aggregate}.}
@@ -55,7 +64,8 @@ Returns a list of ACS objects for different levels to be used with
 }
 \description{
 Because downloading the data to compute a proportion, ratio or
-  aggregation can be slow, the \code{acsdata} function creates an object that  can be used with the \code{\link{sumacs}} function. Before using this
+  aggregation can be slow, the \code{acsdata} function creates an object that
+  can be used with the \code{\link{sumacs}} function. Before using this
   function remember to define a key using the \code{\link{acs}} command
   \code{api.key.install(key="*")}.
 }

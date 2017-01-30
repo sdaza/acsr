@@ -9,7 +9,7 @@
 #' \itemize{
 #'   \item \code{\link{acsdata}}: Create a list containing ACS data files to be used with the function  \code{\link{sumacs}}.
 #'   \item \code{\link{sumacs}}: Estimate proportions, ratios, and aggregations with their respective MOEs.
-#'   \item \code{\link{combine.output}}: Estimate proportions, ratios, and aggregations with their respective MOEs for custom geographic units.
+#'   \item \code{\link{combine.output}}: Estimate proportions, ratios, and aggregations with their respective MOEs using custom geographic units.
 #'   \item \code{\link{getvars}}: Get ACS variable names from formulas.
 #' }
 #'
@@ -18,7 +18,7 @@
 #' \itemize{
 #'   \item Version: 0.1
 #'   \item Date: 2016-07-13
-#'   \item Depends: acs (>= 2.0), data.table (>= 1.9.7)
+#'   \item Depends: acs (>= 2.0), data.table (>= 1.10.0)
 #'   \item URL: \url{http://github.com/sdaza/acsr}
 #' }
 #'
