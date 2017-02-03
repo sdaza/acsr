@@ -7,7 +7,7 @@
 #'   without specifying any \code{data}, remember to define a key using the
 #'   \code{\link{acs}} command \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using
-#'   ACS variables or just variables. + - operators can be included. / defines a
+#'   ACS/Census variables or just variables. + - operators can be included. / defines a
 #'   division. When the formula contains "* 100", the final statistic and MOE is
 #'   multiply by 100.
 #' @param varname A character or vector of characters containing the new
@@ -47,7 +47,7 @@
 #' The default value is \code{aggregate}.
 #' @param dataset A string specifying the data set to be used: acs, sf1 or sf1.
 #' The default value is "acs".
-#' @param endyear An integer (defaults to 2014  ) indicating the latest year of
+#' @param endyear An integer (default is 2014) indicating the latest year of
 #'   the data in the survey.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3, or 5), defaults to 5.
@@ -68,7 +68,7 @@
 #' @details When the standard error of a proportion cannot be estimated, the
 #'   "ratio" option is used. This adjustment is done row by row.
 #' @note Depending on the quality of the internet connection, number of
-#'   variables and levels, getting the ACS data can be slow, especially for the
+#'   variables and levels, getting the ACS/Census data can be slow, especially for the
 #'   levels "county.subdivision", "block.group", and "tract" (it might take more than 30 minutes).  It is recommended to get the data using the function
 #'   \code{\link{acsdata}} first, and then to use \code{sumacs}.
 #' @examples
@@ -166,7 +166,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
 
   newvars <- length(varname)
 
-  print (paste0(". . . . . .  ACS variables : ", nvars))
+  print (paste0(". . . . . .  ACS/Census variables : ", nvars))
   print (paste0(". . . . . .  Levels : ", nlevels))
   print (paste0(". . . . . .  New variables : ", newvars))
 
@@ -217,13 +217,13 @@ output <- list()
     }
     else if ( is.list(data) & !( all(sapply(data, class) ==  "acs") ) )
     {
-      stop("The data must contain ACS objects!")
+      stop("The data must contain acs objects!")
     }
     else if ( !(all(level %in% names(data)))) {
       stop("Not all levels coincide with the data")
     }
     else if ( !(all(variables %in% data[[1]]@acs.colnames)) ) {
-      stop("Not all the ACS variables were found, check variable names in your formulas!")
+      stop("Not all the ACS/Census variables were found, check variable names in your formulas and the dataset you are using!")
     }
 
   ldata <- data

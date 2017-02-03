@@ -20,7 +20,7 @@ sumacs(formula, varname = NULL, method = NULL, level = "state",
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using
-ACS variables or just variables. + - operators can be included. / defines a
+ACS/Census variables or just variables. + - operators can be included. / defines a
 division. When the formula contains "* 100", the final statistic and MOE is
 multiply by 100.}
 
@@ -57,7 +57,7 @@ When \code{combine == TRUE}, the geographic information should be in a list.}
 \item{dataset}{A string specifying the data set to be used: acs, sf1 or sf1.
 The default value is "acs".}
 
-\item{endyear}{An integer (defaults to 2014  ) indicating the latest year of
+\item{endyear}{An integer (default is 2014) indicating the latest year of
 the data in the survey.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
@@ -110,7 +110,7 @@ When the standard error of a proportion cannot be estimated, the
 }
 \note{
 Depending on the quality of the internet connection, number of
-  variables and levels, getting the ACS data can be slow, especially for the
+  variables and levels, getting the ACS/Census data can be slow, especially for the
   levels "county.subdivision", "block.group", and "tract" (it might take more than 30 minutes).  It is recommended to get the data using the function
   \code{\link{acsdata}} first, and then to use \code{sumacs}.
 }

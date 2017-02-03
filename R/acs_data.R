@@ -5,7 +5,7 @@
 #'   function remember to define a key using the \code{\link{acs}} command
 #'   \code{api.key.install(key="*")}.
 #' @param formula A character or vector of characters containing formulas using
-#'   ACS variables. + - operators can be included. / defines a division.
+#'   ACS/Census variables. + - operators can be included. / defines a division.
 #' @param level A character or vector of characters specifying the geographic
 #'   level of the data. It may be necessary to specificy values to the
 #'   corresponding levels. For instance, when \code{level = "county"}, you have
@@ -107,7 +107,7 @@ for (i in seq_along(level)) {
   nvars <- length(variables)
   nlevels <- length(level)
 
-  #print (paste0(". . . . . .  ACS variables : ", nvars))
+  #print (paste0(". . . . . .  ACS/Census variables : ", nvars))
   #print (paste0(". . . . . .  Levels : ", nlevels))
 
   ldata <- list()
@@ -129,7 +129,7 @@ for (i in seq_along(level)) {
                                                        one.zero = TRUE))
 
       if (length(ldata[["us"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -144,7 +144,7 @@ for (i in seq_along(level)) {
                                                            one.zero = TRUE))
 
       if (length(ldata[["region"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -159,7 +159,7 @@ for (i in seq_along(level)) {
                                                              one.zero = TRUE))
 
       if (length(ldata[["division"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -175,7 +175,7 @@ for (i in seq_along(level)) {
                                                                           one.zero = TRUE) )
 
       if (length(ldata[["american.indian.area"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -190,7 +190,7 @@ for (i in seq_along(level)) {
                                                           one.zero = TRUE))
 
       if (length(ldata[["state"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -204,7 +204,7 @@ for (i in seq_along(level)) {
                                                            span = span, one.zero = TRUE))
 
       if (length(ldata[["county"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -224,7 +224,7 @@ for (i in seq_along(level)) {
                                                                          one.zero = TRUE) )
 
       if (length(ldata[["county.subdivision"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
     }
 
@@ -239,7 +239,7 @@ for (i in seq_along(level)) {
                                                            one.zero = TRUE) )
 
       if (length(ldata[["place"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
     }
 
@@ -255,7 +255,7 @@ for (i in seq_along(level)) {
                                                            one.zero = TRUE) )
 
       if (length(ldata[["tract"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
     }
 
@@ -294,7 +294,7 @@ for (i in seq_along(level)) {
       }
 
       if (length(ldata[["block.group"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
     }
 
@@ -309,7 +309,7 @@ for (i in seq_along(level)) {
                                                           one.zero = TRUE) )
 
       if (length(ldata[["msa"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -325,7 +325,7 @@ for (i in seq_along(level)) {
                                                           one.zero = TRUE) )
 
       if (length(ldata[["csa"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -341,7 +341,7 @@ for (i in seq_along(level)) {
                                                             one.zero = TRUE) )
 
       if (length(ldata[["necta"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -357,7 +357,7 @@ for (i in seq_along(level)) {
                                                                  one.zero = TRUE) )
 
       if (length(ldata[["urban.area"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -373,7 +373,7 @@ for (i in seq_along(level)) {
                                                                             one.zero = TRUE) )
 
       if (length(ldata[["congressional.district"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -388,7 +388,7 @@ for (i in seq_along(level)) {
                                                                                       one.zero = TRUE) )
 
       if (length(ldata[["state.legislative.district.upper"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -403,7 +403,7 @@ for (i in seq_along(level)) {
                                                                                       one.zero = TRUE) )
 
       if (length(ldata[["state.legislative.district.lower"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -418,7 +418,7 @@ for (i in seq_along(level)) {
                                                           one.zero = TRUE) )
 
       if (length(ldata[["puma"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -433,7 +433,7 @@ for (i in seq_along(level)) {
                                                               one.zero = TRUE) )
 
       if (length(ldata[["zip.code"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -448,7 +448,7 @@ for (i in seq_along(level)) {
                                                                                  span = span, one.zero = TRUE) )
 
       if (length(ldata[["school.district.elementary"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -463,7 +463,7 @@ for (i in seq_along(level)) {
                                                                                one.zero = TRUE) )
 
       if (length(ldata[["school.district.secondary"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }
@@ -478,7 +478,7 @@ for (i in seq_along(level)) {
                                                                              one.zero = TRUE) )
 
       if (length(ldata[["school.district.unified"]]@acs.colnames) != length(variables)) {
-        stop("Not all the ACS variables were found, check variable names in your formulas!")
+        stop("Not all the ACS/Census variables were found, check variable names in your formulas!")
       }
 
     }

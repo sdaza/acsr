@@ -17,7 +17,7 @@ acsdata(formula, level = "state", dataset = "acs", endyear = 2014,
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using
-ACS variables. + - operators can be included. / defines a division.}
+ACS/Census variables. + - operators can be included. / defines a division.}
 
 \item{level}{A character or vector of characters specifying the geographic
   level of the data. It may be necessary to specificy values to the
