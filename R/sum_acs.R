@@ -45,10 +45,10 @@
 #' the function assumes that all the counties are from WI.
 #' @param combine.name Label for the aggregate geography when combining levels.
 #' The default value is \code{aggregate}.
-#' @param dataset A string specifying the data set to be used: acs, sf1 or sf1.
+#' @param dataset A string or vector of strings specifying the data set to be used: acs, sf1 or sf1.
 #' The default value is "acs".
-#' @param endyear An integer (default is 2014) indicating the latest year of
-#'   the data in the survey.
+#' @param endyear An integer or vector of integers (default is 2014) indicating the latest year of
+#'   the data in the survey or Census year.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3, or 5), defaults to 5.
 #' @param conf.level Confidence level to estimate MOEs. The default value is
@@ -89,6 +89,140 @@
 #'  block.group = list(1:2, 1:2),
 #'  combine = TRUE)
 sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
+                    dataset = "acs", endyear = 2014, span = 5, conf.level = 0.90,
+                    one.zero = TRUE, trace = TRUE, data = NULL,
+                    format.out = "wide", file = NULL, print.levels = TRUE,
+                    us = "*",
+                    region = "*",
+                    division = "*",
+                    state = "WI",
+                    county = "*",
+                    county.subdivision ="*",
+                    place ="*",
+                    tract = "*",
+                    block.group = "*",
+                    msa = "*",
+                    csa = "*",
+                    necta = "*",
+                    urban.area = "*",
+                    congressional.district = "*",
+                    state.legislative.district.upper = "*",
+                    state.legislative.district.lower = "*",
+                    puma = "*",
+                    zip.code = "*",
+                    american.indian.area = "*",
+                    school.district.elementary = "*",
+                    school.district.secondary = "*",
+                    school.district.unified = "*",
+                    combine = FALSE,
+                    combine.name = "aggregate")  {
+
+    # define new name file to export csv
+    newfile <- NULL
+    if (!is.null(file)) {
+      newfile <- file
+      file <-  NULL
+    }
+
+    if (length(varname) > 1 & any(duplicated(varname))) {
+      stop("Duplicated varnames, please define unique varnames!")
+
+    }
+    # initial tests
+    if (length(formula) > 1 & length(method) == 1) {
+      method <- rep(method, length(formula)) # repeat method
+    }
+
+    if (is.null(varname) & length(grep("variable", method)) == length(formula)) {
+      varname <- formula
+    }
+
+    if (is.null(varname)) {
+      varname <- paste0("var", 1:length(formula))
+    }
+
+    # create dataset combining features
+    if (length(dataset) == 1) {  dataset <- rep(dataset, length(formula)) }
+    if (length(endyear) == 1) {  endyear <- rep(endyear, length(formula)) }
+
+    if (!all.equal(length(dataset), length(endyear), length(formula))) {
+      stop("Formula, dataset, endyear and varname should have the same length!")
+    }
+    else {
+      vdata <- data.table(formula, dataset, endyear, varname, method)
+      # create combinations
+      comb <- vdata[, .(dataset, endyear)]
+      comb <- comb[!duplicated(comb)]
+
+      # define list to save results
+      output <- list()
+      # loop through object comb
+      for (i in 1:nrow(comb)) {
+        temp <- vdata[dataset == comb[i, dataset] & endyear == comb[i, endyear]]
+        print(paste0("Extracting data from: ", comb[i, dataset], ", year ",
+                     comb[i, endyear]))
+        output[[i]] <- compute.acs(formula = temp$formula,
+                                   level = level,
+                                   dataset = unique(temp$dataset),
+                                   endyear = unique(temp$endyear),
+                                   method = temp$method,
+                                   varname = temp$varname,
+                                   span = span,
+                                   conf.level = conf.level,
+                                   one.zero = one.zero,
+                                   trace = trace,
+                                   data = data,
+                                   format.out = format.out,
+                                   file = file,
+                                   us = us,
+                                   region = region,
+                                   division = division,
+                                   state = state,
+                                   county = county,
+                                   county.subdivision = county.subdivision,
+                                   place = place,
+                                   tract = tract,
+                                   block.group = block.group,
+                                   msa = msa,
+                                   csa = csa,
+                                   necta = necta,
+                                   urban.area = urban.area,
+                                   congressional.district = congressional.district,
+                                   state.legislative.district.upper = state.legislative.district.upper,
+                                   state.legislative.district.lower = state.legislative.district.lower,
+                                   puma = puma,
+                                   zip.code = zip.code,
+                                   american.indian.area = american.indian.area,
+                                   school.district.elementary = school.district.elementary,
+                                   school.district.secondary = school.district.secondary,
+                                   school.district.unified = school.district.unified,
+                                   combine = combine,
+                                   combine.name = combine.name,
+                                   print.levels = print.levels
+                      )
+      }
+      # merge files
+      if (format.out == "wide") {
+        vars <- grep("sumlevel|geoid|fips", names(output[[1]]), value = TRUE)
+        mydata <- Reduce(function(x, y) merge(x, y, all = TRUE, by=c(vars)), output)
+      }
+      else if (format.out == "long") {
+        mydata <- rbindlist(output, fill = TRUE)
+      }
+
+      if (is.null(newfile)) {
+        return(mydata)
+      }
+      else {
+        fwrite(mydata, file = newfile)
+        print("Data exported to a CSV file! ")
+         }
+    }
+} # end function
+
+
+# individual extraction function
+compute.acs <- function(formula, varname = NULL, method = NULL,  level = "state",
                     dataset = "acs", endyear = 2014, span = 5, conf.level = 0.90,
                     one.zero = TRUE, trace = TRUE, data = NULL,
                     format.out = "wide", file = NULL, print.levels = TRUE,

@@ -37,11 +37,11 @@ ACS/Census variables. + - operators can be included. / defines a division.}
   950 state, school.district.elementary \cr 960 state,
   school.district.secondary \cr 970 state, school.district.unified \cr}
 
-\item{dataset}{A string specifying the data set to be used: acs, sf1 or sf1.
+\item{dataset}{A string or vector of strings specifying the data set to be used: acs, sf1 or sf1.
 The default value is "acs".}
 
-\item{endyear}{An integer (defaults to 2014) indicating the latest year of
-the data in the survey.}
+\item{endyear}{An integer or vector of integers (defaults to 2014) indicating the latest year of
+the data in the survey or Census year.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3,or 5), defaults to 5.}

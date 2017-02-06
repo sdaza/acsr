@@ -33,7 +33,7 @@ estimate expected: "proportion", "ratio", "aggregation", "variables". This
 vector must have same length as \code{formula} and \code{varname}. It is
 not needed when getting only variables.}
 
-\item{level}{A list specifying the geographic level of the data. It may be necessary to specificy values to the
+\item{level}{A list specifying the geographic level of the data. It may be necessary to specify values to the
   corresponding levels. For instance, when \code{level = list("county")}, you have
   to specify a state (e.g., \code{state = list("WI")}, the default state in this
   package), and the counties you want to combine: \code{county = list(1,2)}. They may
@@ -55,11 +55,11 @@ not needed when getting only variables.}
 \item{combine.names}{Labels for the aggregate geographies.
 It should be the same as the number of elements of the list \code{level}.}
 
-\item{dataset}{A string specifying the data set to be used: acs, sf1 or sf1.
+\item{dataset}{A string or vector of strings specifying the data set to be used: acs, sf1 or sf1.
 The default value is "acs".}
 
-\item{endyear}{An integer (defaults to 2014) indicating the latest year of
-the data in the survey.}
+\item{endyear}{An integer or vector of integers (defaults to 2014) indicating the latest year of
+the data in the survey or Census year.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3, or 5), defaults to 5.}
@@ -89,7 +89,8 @@ Returns a \code{data.table/data.frame} object with the estimates and
   MOEs.
 }
 \description{
-Using the \code{sumacs} function, it  computes proportions, ratios and aggregations based on text formulas, or simply extract variables of combinations of geographic units.
+Using the \code{sumacs} function, it  computes proportions, ratios and
+  aggregations based on text formulas, or simply extract variables of combinations of geographic units.
   It uses the same procedures of the \code{sumacs} function, but the geographic level and
   information have to be specified in lists (they can be nested).
 }
@@ -98,7 +99,7 @@ When the standard error of a proportion cannot be estimated, the
   "ratio" option is used. This adjustment is done row by row.
 }
 \note{
-Depending on the quality of the internet connection, number of
+Depending on the quality of the Internet connection, number of
   variables and levels, getting the ACS data can be slow, especially for the
   levels "county.subdivision", "block.group", and "tract" (it might take more
   than 30 minutes).  It is recommended to get the data using the function

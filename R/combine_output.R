@@ -1,6 +1,7 @@
 #' @title Estimate proportions, ratios, aggregations and the respective margins
 #'   of error (MOEs) of custom combinations of geographic units.
-#' @description Using the \code{sumacs} function, it  computes proportions, ratios and aggregations based on text formulas, or simply extract variables of combinations of geographic units.
+#' @description Using the \code{sumacs} function, it  computes proportions, ratios and
+#'   aggregations based on text formulas, or simply extract variables of combinations of geographic units.
 #'   It uses the same procedures of the \code{sumacs} function, but the geographic level and
 #'   information have to be specified in lists (they can be nested).
 #' @param formula A character or vector of characters containing formulas using
@@ -15,7 +16,7 @@
 #'   estimate expected: "proportion", "ratio", "aggregation", "variables". This
 #'   vector must have same length as \code{formula} and \code{varname}. It is
 #'   not needed when getting only variables.
-#' @param level A list specifying the geographic level of the data. It may be necessary to specificy values to the
+#' @param level A list specifying the geographic level of the data. It may be necessary to specify values to the
 #'   corresponding levels. For instance, when \code{level = list("county")}, you have
 #'   to specify a state (e.g., \code{state = list("WI")}, the default state in this
 #'   package), and the counties you want to combine: \code{county = list(1,2)}. They may
@@ -36,10 +37,10 @@
 #'
 #' @param combine.names Labels for the aggregate geographies.
 #' It should be the same as the number of elements of the list \code{level}.
-#' @param dataset A string specifying the data set to be used: acs, sf1 or sf1.
+#' @param dataset A string or vector of strings specifying the data set to be used: acs, sf1 or sf1.
 #' The default value is "acs".
-#' @param endyear An integer (defaults to 2014) indicating the latest year of
-#'   the data in the survey.
+#' @param endyear An integer or vector of integers (defaults to 2014) indicating the latest year of
+#'   the data in the survey or Census year.
 #' @param span An integer indicating the span (in years) of the desired ACS data
 #'   (should be 1, 3, or 5), defaults to 5.
 #' @param conf.level Confidence level to estimate MOEs. The default value is
@@ -59,7 +60,7 @@
 #'   MOEs.
 #' @details When the standard error of a proportion cannot be estimated, the
 #'   "ratio" option is used. This adjustment is done row by row.
-#' @note Depending on the quality of the internet connection, number of
+#' @note Depending on the quality of the Internet connection, number of
 #'   variables and levels, getting the ACS data can be slow, especially for the
 #'   levels "county.subdivision", "block.group", and "tract" (it might take more
 #'   than 30 minutes).  It is recommended to get the data using the function

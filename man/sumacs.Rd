@@ -54,11 +54,11 @@ not needed when getting only variables.}
 
 When \code{combine == TRUE}, the geographic information should be in a list.}
 
-\item{dataset}{A string specifying the data set to be used: acs, sf1 or sf1.
+\item{dataset}{A string or vector of strings specifying the data set to be used: acs, sf1 or sf1.
 The default value is "acs".}
 
-\item{endyear}{An integer (default is 2014) indicating the latest year of
-the data in the survey.}
+\item{endyear}{An integer or vector of integers (default is 2014) indicating the latest year of
+the data in the survey or Census year.}
 
 \item{span}{An integer indicating the span (in years) of the desired ACS data
 (should be 1, 3, or 5), defaults to 5.}

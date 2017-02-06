@@ -3,6 +3,7 @@
 export(acsdata)
 export(combine.make.geo)
 export(combine.output)
+export(compute.acs)
 export(getvars)
 export(sumacs)
 import(acs)
