@@ -159,7 +159,7 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
       # loop through object comb
       for (i in 1:nrow(comb)) {
         temp <- vdata[dataset == comb[i, dataset] & endyear == comb[i, endyear]]
-        print(paste0("Extracting data from: ", comb[i, dataset], ", year ",
+        print(paste0("Extracting data from: ", comb[i, dataset], " ",
                      comb[i, endyear]))
         output[[i]] <- compute.acs(formula = temp$formula,
                                    level = level,
