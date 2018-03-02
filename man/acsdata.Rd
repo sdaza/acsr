@@ -90,4 +90,3 @@ acsdata("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
   tract = list(950100, 11700),
   block.group = list(1:2, 1:2), combine = TRUE)
 }
-

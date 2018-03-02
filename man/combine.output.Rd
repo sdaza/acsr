@@ -114,4 +114,3 @@ Depending on the quality of the Internet connection, number of
     division = list(list(1:2, 3), list(1:2, 3:4)),
     combine.names = c("g1", "g2"))
 }
-

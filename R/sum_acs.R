@@ -15,9 +15,9 @@
 #'   \code{formula} and \code{method}, and it is not needed when getting only
 #'   variables.
 #' @param method A character or vector of characters defining the type of
-#'   estimate expected: "proportion", "ratio", "aggregation", "variables". This
+#'   estimate expected: "proportion", "ratio", "aggregation", "variable". This
 #'   vector must have same length as \code{formula} and \code{varname}. It is
-#'   not needed when getting only variables.
+#'   not needed when getting only variables. Default value "variable".
 #' @param level A character or vector of characters specifying the geographic
 #'   level of the data. It may be necessary to specificy values to the
 #'   corresponding levels. For instance, when \code{level = "county"}, you have
@@ -88,7 +88,8 @@
 #'  tract = list(950100, 11700),
 #'  block.group = list(1:2, 1:2),
 #'  combine = TRUE)
-sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
+sumacs  <- function(formula, varname = NULL, method = "variable",
+                    level = "state",
                     dataset = "acs", endyear = 2014, span = 5, conf.level = 0.90,
                     one.zero = TRUE, trace = TRUE, data = NULL,
                     format.out = "wide", file = NULL, print.levels = TRUE,
@@ -130,15 +131,16 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
     }
     # initial tests
     if (length(formula) > 1 & length(method) == 1) {
-      method <- rep(method, length(formula)) # repeat method
+      method <- rep(method, length(formula))
     }
 
-    if (is.null(varname) & length(grep("variable", method)) == length(formula)) {
-      varname <- formula
+    if (length(varname)==0 & all(method=='variable')) {
+      varname <- getvars(formula)
     }
 
-    if (is.null(varname)) {
+    if (length(varname)==0 & all(method!='variable')) {
       varname <- paste0("var", 1:length(formula))
+      print("Specify varname to get custom variable names!")
     }
 
     # create dataset combining features
@@ -214,12 +216,18 @@ sumacs  <- function(formula, varname = NULL, method = NULL,  level = "state",
         return(mydata)
       }
       else {
-        fwrite(mydata, file = newfile)
+        fwrite(mydata, file = newfile, na='NA')
         print("Data exported to a CSV file! ")
          }
     }
 } # end function
 
+# replace missing values function
+missing_thres <- -99999999
+rmiss <- function(mat, miss_value = missing_thres) {
+  mat[mat < miss_value] <- NA
+  return(mat)
+}
 
 # individual extraction function
 compute.acs <- function(formula, varname = NULL, method = NULL,  level = "state",
@@ -274,18 +282,22 @@ compute.acs <- function(formula, varname = NULL, method = NULL,  level = "state"
   ###############################
   # definition of some variables
   ###############################
+  if (length(varname) > 1 & any(duplicated(varname))) {
+    stop("Duplicated varnames, please define unique varnames!")
+
+  }
 
   if (length(formula) > 1 & length(method) == 1) {
     method <- rep(method, length(formula))
   }
 
-  if (is.null(varname) & length(grep("variable", method)) == length(formula)) {
-    varname <- formula
+  if (length(varname)==0 & all(method=='variable')) {
+    varname <- getvars(formula)
   }
 
-  if (is.null(varname)) {
+  if (length(varname)==0 & all(method!='variable')) {
     varname <- paste0("var", 1:length(formula))
-    print("Specificy varname to get custom variable names!")
+    print("Specify varname to get custom variable names!")
   }
 
    if ((identical(length(formula), length(method)) == 0)) {
@@ -460,6 +472,8 @@ output <- list()
       {
        p <- as.vector(dat@estimate[, v])
        new_error <- as.vector(dat@standard.error[, v])
+       p <- ifelse(p < missing_thres, NA, p)
+       new_error <- ifelse(new_error < missing_thres, NA, new_error)
       }
 
       ######################
@@ -494,11 +508,11 @@ output <- list()
         }
 
         # estimates and errors
-        est <- acs::estimate(dat)
-        err <- acs::standard.error(dat)
+        est <- rmiss(acs::estimate(dat))
+        err <- rmiss(acs::standard.error(dat))
 
-        num <- acs::estimate(eval(parse(text=nt)))
-        den <- acs::estimate(eval(parse(text=dt)))
+        num <- rmiss(acs::estimate(eval(parse(text=nt))))
+        den <- rmiss(acs::estimate(eval(parse(text=dt))))
 
         p <- num / den
 
@@ -653,9 +667,9 @@ output <- list()
 
         # estimates and errors
 
-        est <- acs::estimate(dat)
-        err <- acs::standard.error(dat)
-        p  <-  acs::estimate(eval(parse(text = ft)))
+        est <- rmiss(acs::estimate(dat))
+        err <- rmiss(acs::standard.error(dat))
+        p  <-  rmiss(acs::estimate(eval(parse(text = ft))))
 
         # one zero  computation
 
@@ -1345,7 +1359,7 @@ else if (format.out == "wide") {
 
   # write csv
     if (!is.null(file)) {
-        fwrite(fdata, file = file)
+        fwrite(fdata, file = file, na = 'NA')
         print(". . . . . .  Data exported to a CSV file! ")
       }
 

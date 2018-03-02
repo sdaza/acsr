@@ -21,4 +21,3 @@ Text can be upper or lower case, include parentheses or "* 100".
 \examples{
 getvars("b16004_004 + b16004_026 + b16004_048 / b16004_001")
 }
-

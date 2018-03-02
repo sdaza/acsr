@@ -5,7 +5,7 @@
 \title{Estimate proportions, ratios, aggregations and the respective margins
   of error (MOEs).}
 \usage{
-sumacs(formula, varname = NULL, method = NULL, level = "state",
+sumacs(formula, varname = NULL, method = "variable", level = "state",
   dataset = "acs", endyear = 2014, span = 5, conf.level = 0.9,
   one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide",
   file = NULL, print.levels = TRUE, us = "*", region = "*",
@@ -30,9 +30,9 @@ variables to be created. This vector must have same length as
 variables.}
 
 \item{method}{A character or vector of characters defining the type of
-estimate expected: "proportion", "ratio", "aggregation", "variables". This
+estimate expected: "proportion", "ratio", "aggregation", "variable". This
 vector must have same length as \code{formula} and \code{varname}. It is
-not needed when getting only variables.}
+not needed when getting only variables. Default value "variable".}
 
 \item{level}{A character or vector of characters specifying the geographic
   level of the data. It may be necessary to specificy values to the
@@ -132,4 +132,3 @@ sumacs("(b16004_004 + b16004_026 + b16004_048 / b16004_001)",
  block.group = list(1:2, 1:2),
  combine = TRUE)
 }
-

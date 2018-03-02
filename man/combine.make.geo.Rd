@@ -42,4 +42,3 @@ Returns a combined \code{geo.make} object used to extract data.
 \description{
 Combine geographic objects created by the ACS package. Auxiliary function to combine geographic levels.
 }
-
