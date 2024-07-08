@@ -1,3 +1,6 @@
+## Version 0.3
+
+- Fix reference to base::apply
 
 ## Version 0.2
 

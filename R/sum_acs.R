@@ -361,7 +361,7 @@ output <- list()
     if ( !is.list(data) ) {
       stop("The data must be a list!")
     }
-    else if ( is.list(data) & !( all(sapply(data, class) ==  "acs") ) )
+    else if ( is.list(data) & !( all(base::sapply(data, class) ==  "acs") ) )
     {
       stop("The data must contain acs objects!")
     }
@@ -579,8 +579,8 @@ output <- list()
           if ( one.zero == TRUE ) {
 
             if (length(wn) > 1) {
-              err_zero_num <- apply(err[, wn] ^ 2 * (est[, wn] == 0), 1, max)
-              err_num <- apply(err[, wn] ^ 2 * (est[, wn] != 0), 1, sum)
+              err_zero_num <- base::apply(err[, wn] ^ 2 * (est[, wn] == 0), 1, max)
+              err_num <- base::apply(err[, wn] ^ 2 * (est[, wn] != 0), 1, sum)
             }
             else {
               err_zero_num <- err[, wn] ^ 2 * (est[, wn] == 0)
@@ -588,8 +588,8 @@ output <- list()
             }
 
             if (length(wd) > 1 ) {
-              err_zero_den <- apply(err[, wd] ^ 2 * (est[, wd] == 0), 1, max)
-              err_den <- apply(err[, wd] ^ 2 * (est[, wd] != 0), 1, sum)
+              err_zero_den <- base::apply(err[, wd] ^ 2 * (est[, wd] == 0), 1, max)
+              err_den <- base::apply(err[, wd] ^ 2 * (est[, wd] != 0), 1, sum)
             }
             else {
               err_zero_den <- err[, wd] ^ 2 * (est[, wd] == 0)
@@ -604,7 +604,7 @@ output <- list()
           else if ( one.zero == FALSE ) {
 
             if (length(wn) > 1) {
-              err_num <- apply(err[, wn] ^ 2 , 1, sum)
+              err_num <- base::apply(err[, wn] ^ 2 , 1, sum)
             }
 
             else {
@@ -612,7 +612,7 @@ output <- list()
             }
 
             if (length(wd) > 1 ) {
-              err_den <- apply(err[, wd] ^ 2, 1, sum)
+              err_den <- base::apply(err[, wd] ^ 2, 1, sum)
             }
             else {
               err_den <- err[, wd] ^ 2
@@ -708,8 +708,8 @@ output <- list()
           if ( one.zero == TRUE ) {
 
             if (length(wa) > 1) {
-              err_zero_agg <- apply(err[, wa] ^ 2 * (est[, wa] == 0), 1, max)
-              err_agg <- apply(err[, wa] ^ 2 * (est[, wa] != 0), 1, sum)
+              err_zero_agg <- base::apply(err[, wa] ^ 2 * (est[, wa] == 0), 1, max)
+              err_agg <- base::apply(err[, wa] ^ 2 * (est[, wa] != 0), 1, sum)
             }
             else {
               err_zero_agg <- err[, wa] ^ 2 * (est[, wa] == 0)
@@ -723,7 +723,7 @@ output <- list()
           else if ( one.zero == FALSE ) {
 
             if (length(wa) > 1) {
-              err_agg <- apply(err[, wa] ^ 2 , 1, sum)
+              err_agg <- base::apply(err[, wa] ^ 2 , 1, sum)
             }
             else {
               err_agg <- err[, wa] ^ 2
