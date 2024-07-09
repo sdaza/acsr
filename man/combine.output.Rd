@@ -5,17 +5,43 @@
 \title{Estimate proportions, ratios, aggregations and the respective margins
   of error (MOEs) of custom combinations of geographic units.}
 \usage{
-combine.output(formula = formula, varname = varname, method = method,
-  level = level, combine.names, dataset = "acs", endyear = 2014,
-  span = 5, conf.level = 0.9, one.zero = TRUE, trace = TRUE,
-  format.out = "wide", file = NULL, print.levels = TRUE, region = "*",
-  division = "*", state = "WI", county = "*", county.subdivision = "*",
-  place = "*", tract = "*", block.group = "*", msa = "*", csa = "*",
-  necta = "*", urban.area = "*", congressional.district = "*",
+combine.output(
+  formula = formula,
+  varname = varname,
+  method = method,
+  level = level,
+  combine.names,
+  dataset = "acs",
+  endyear = 2014,
+  span = 5,
+  conf.level = 0.9,
+  one.zero = TRUE,
+  trace = TRUE,
+  format.out = "wide",
+  file = NULL,
+  print.levels = TRUE,
+  region = "*",
+  division = "*",
+  state = "WI",
+  county = "*",
+  county.subdivision = "*",
+  place = "*",
+  tract = "*",
+  block.group = "*",
+  msa = "*",
+  csa = "*",
+  necta = "*",
+  urban.area = "*",
+  congressional.district = "*",
   state.legislative.district.upper = "*",
-  state.legislative.district.lower = "*", puma = "*", zip.code = "*",
-  american.indian.area = "*", school.district.elementary = "*",
-  school.district.secondary = "*", school.district.unified = "*")
+  state.legislative.district.lower = "*",
+  puma = "*",
+  zip.code = "*",
+  american.indian.area = "*",
+  school.district.elementary = "*",
+  school.district.secondary = "*",
+  school.district.unified = "*"
+)
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using
