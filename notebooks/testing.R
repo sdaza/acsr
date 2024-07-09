@@ -1,6 +1,7 @@
 library(acsr)
 
-api.key.install(key="926983368457604ed165dc0d2618e58152397d22")
+key = readLines('notebooks/data/api.txt')
+api.key.install(key=key)
 
 f = fread('notebooks/data/moe_FS_16.csv')
 
