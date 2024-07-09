@@ -21,6 +21,6 @@
 #'   \item URL: \url{http://github.com/sdaza/acsr}
 #' }
 #'
-#' @docType package
+#'
 #' @name acsr
 NULL
