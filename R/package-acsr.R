@@ -2,7 +2,7 @@
 #'
 #' @description Wrapped functions to download, manage, and presenting data from the U.S. Census American Community Survey (ACS).
 #'
-#' @author Sebastian Daza \email{sdaza@@ssc.wisc.edu}
+#' @author Sebastian Daza \email{sebastian.daza@gmail.com}
 #'
 #' @section Functions:
 #'
@@ -15,12 +15,12 @@
 #' @details
 #'
 #' \itemize{
-#'   \item Version: 0.2
-#'   \item Date: 2017-02-23
+#'   \item Version: 0.3
+#'   \item Date: 2024-07-08
 #'   \item Depends: acs (>= 2.1.2), data.table (>= 1.10.4)
 #'   \item URL: \url{http://github.com/sdaza/acsr}
 #' }
 #'
-#' @docType package
+#'
 #' @name acsr
 NULL

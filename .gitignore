@@ -1,0 +1,7 @@
+.Rproj.user
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+*.Rproj
+/notebooks/data/api.txt

@@ -5,18 +5,46 @@
 \title{Estimate proportions, ratios, aggregations and the respective margins
   of error (MOEs).}
 \usage{
-sumacs(formula, varname = NULL, method = "variable", level = "state",
-  dataset = "acs", endyear = 2014, span = 5, conf.level = 0.9,
-  one.zero = TRUE, trace = TRUE, data = NULL, format.out = "wide",
-  file = NULL, print.levels = TRUE, us = "*", region = "*",
-  division = "*", state = "WI", county = "*", county.subdivision = "*",
-  place = "*", tract = "*", block.group = "*", msa = "*", csa = "*",
-  necta = "*", urban.area = "*", congressional.district = "*",
+sumacs(
+  formula,
+  varname = NULL,
+  method = "variable",
+  level = "state",
+  dataset = "acs",
+  endyear = 2014,
+  span = 5,
+  conf.level = 0.9,
+  one.zero = TRUE,
+  trace = TRUE,
+  data = NULL,
+  format.out = "wide",
+  file = NULL,
+  print.levels = TRUE,
+  us = "*",
+  region = "*",
+  division = "*",
+  state = "WI",
+  county = "*",
+  county.subdivision = "*",
+  place = "*",
+  tract = "*",
+  block.group = "*",
+  msa = "*",
+  csa = "*",
+  necta = "*",
+  urban.area = "*",
+  congressional.district = "*",
   state.legislative.district.upper = "*",
-  state.legislative.district.lower = "*", puma = "*", zip.code = "*",
-  american.indian.area = "*", school.district.elementary = "*",
-  school.district.secondary = "*", school.district.unified = "*",
-  combine = FALSE, combine.name = "aggregate")
+  state.legislative.district.lower = "*",
+  puma = "*",
+  zip.code = "*",
+  american.indian.area = "*",
+  school.district.elementary = "*",
+  school.district.secondary = "*",
+  school.district.unified = "*",
+  combine = FALSE,
+  combine.name = "aggregate"
+)
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using

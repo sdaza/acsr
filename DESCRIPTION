@@ -2,10 +2,11 @@ Package: acsr
 Type: Package
 Title: Wrapped functions to manage data from the US Census American Community
     Survey (ACS)
-Version: 0.2
-Date: 2017-02-23
-Author: Sebastian Daza <sdaza@ssc.wisc.edu>
-Maintainer: Sebastian Daza <sdaza@ssc.wisc.edu>
+Version: 0.3
+Encoding: UTF-8
+Date: 2024-07-08
+Author: Sebastian Daza <sebastian.daza@gmail.com>
+Maintainer: Sebastian Daza <sebastian.daza@gmail.com>
 Description: Wrapped functions to download, manage, and presenting data from the
     U.S. Census American Community Survey (ACS).
 License: What license is it under?
@@ -14,4 +15,4 @@ Depends:
     data.table (>= 1.10.4)
 LazyData: true
 URL: http://github.com/sdaza/acsr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.3.2
