@@ -7,4 +7,4 @@ f = fread('notebooks/data/moe_FS_16.csv')
 
 out = sumacs(f$formula, varname=f$myfield, method=f$type,
         level = 'county.subdivision', endyear=2016, 
-        file = 'example.csv')
+        file = 'notebooks/example.csv')
