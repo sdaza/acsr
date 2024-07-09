@@ -3,15 +3,14 @@
 \docType{package}
 \name{acsr}
 \alias{acsr}
-\alias{acsr-package}
 \title{acsr: A package with wrapped functions to manage ACS files.}
 \description{
 Wrapped functions to download, manage, and presenting data from the U.S. Census American Community Survey (ACS).
 }
 \details{
 \itemize{
-  \item Version: 0.2
-  \item Date: 2017-02-23
+  \item Version: 0.3
+  \item Date: 2024-07-08
   \item Depends: acs (>= 2.1.2), data.table (>= 1.10.4)
   \item URL: \url{http://github.com/sdaza/acsr}
 }
@@ -27,5 +26,5 @@ Wrapped functions to download, manage, and presenting data from the U.S. Census 
 }
 
 \author{
-Sebastian Daza \email{sdaza@ssc.wisc.edu}
+Sebastian Daza \email{sebastian.daza@gmail.com}
 }

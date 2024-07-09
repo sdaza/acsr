@@ -4,16 +4,38 @@
 \alias{acsdata}
 \title{Create a list containing ACS data files (\code{\link{acs}}).}
 \usage{
-acsdata(formula, level = "state", dataset = "acs", endyear = 2014,
-  span = 5, us = "*", region = "*", division = "*", state = "WI",
-  county = "*", county.subdivision = "*", place = "*", tract = "*",
-  block.group = "*", msa = "*", csa = "*", necta = "*",
-  urban.area = "*", congressional.district = "*",
+acsdata(
+  formula,
+  level = "state",
+  dataset = "acs",
+  endyear = 2014,
+  span = 5,
+  us = "*",
+  region = "*",
+  division = "*",
+  state = "WI",
+  county = "*",
+  county.subdivision = "*",
+  place = "*",
+  tract = "*",
+  block.group = "*",
+  msa = "*",
+  csa = "*",
+  necta = "*",
+  urban.area = "*",
+  congressional.district = "*",
   state.legislative.district.upper = "*",
-  state.legislative.district.lower = "*", puma = "*", zip.code = "*",
-  american.indian.area = "*", school.district.elementary = "*",
-  school.district.secondary = "*", school.district.unified = "*",
-  combine = FALSE, combine.name = "aggregate", print.levels = TRUE)
+  state.legislative.district.lower = "*",
+  puma = "*",
+  zip.code = "*",
+  american.indian.area = "*",
+  school.district.elementary = "*",
+  school.district.secondary = "*",
+  school.district.unified = "*",
+  combine = FALSE,
+  combine.name = "aggregate",
+  print.levels = TRUE
+)
 }
 \arguments{
 \item{formula}{A character or vector of characters containing formulas using

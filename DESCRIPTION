@@ -14,4 +14,4 @@ Depends:
     data.table (>= 1.10.4)
 LazyData: true
 URL: http://github.com/sdaza/acsr
-RoxygenNote: 6.0.1
+RoxygenNote: 7.2.3

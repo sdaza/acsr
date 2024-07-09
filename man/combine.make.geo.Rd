@@ -4,14 +4,32 @@
 \alias{combine.make.geo}
 \title{Combine geographic sets using the ACS geo.make function}
 \usage{
-combine.make.geo(level, combine.name = "aggregate", print.levels = TRUE,
-  region = "*", division = "*", state = "*", county = "*",
-  county.subdivision = "*", place = "*", tract = "*", block.group = "*",
-  msa = "*", csa = "*", necta = "*", urban.area = "*",
-  congressional.district = "*", state.legislative.district.upper = "*",
-  state.legislative.district.lower = "*", puma = "*", zip.code = "*",
-  american.indian.area = "*", school.district.elementary = "*",
-  school.district.secondary = "*", school.district.unified = "*")
+combine.make.geo(
+  level,
+  combine.name = "aggregate",
+  print.levels = TRUE,
+  region = "*",
+  division = "*",
+  state = "*",
+  county = "*",
+  county.subdivision = "*",
+  place = "*",
+  tract = "*",
+  block.group = "*",
+  msa = "*",
+  csa = "*",
+  necta = "*",
+  urban.area = "*",
+  congressional.district = "*",
+  state.legislative.district.upper = "*",
+  state.legislative.district.lower = "*",
+  puma = "*",
+  zip.code = "*",
+  american.indian.area = "*",
+  school.district.elementary = "*",
+  school.district.secondary = "*",
+  school.district.unified = "*"
+)
 }
 \arguments{
 \item{level}{A character or vector of characters specifying the geographic
